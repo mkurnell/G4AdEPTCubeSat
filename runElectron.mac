@@ -1,0 +1,47 @@
+#########################
+# Set of the verboses 
+#
+/control/verbose 0
+/tracking/verbose 0
+/event/verbose 0
+/run/verbose 0
+/vis/verbose 0
+
+##########################
+# Multi-threading mode
+#
+/run/numberOfThreads 4
+
+##########################
+# Set of the physic models
+#
+/cuts/setLowEdge 990 eV
+
+##########################
+# Initialisation procedure
+#
+/run/initialize
+
+#########################
+# Setup planar source in order to calculate the instrument response function
+# NOTE: The source radius should be large enough to ensure the entire instrument is covered
+#       from all the angles
+/gps/pos/type Plane
+/gps/pos/shape Circle
+/gps/pos/radius 11 cm
+/gps/pos/centre 0. 0. 0. cm
+/gps/direction 0. 0. -1.
+/gps/ang/type planar
+
+#########################
+# Set particle type, energy, and distribution
+#
+/gps/particle e-
+/gps/ene/type Mono
+/gps/ene/mono {Ekin} MeV
+
+#########################
+# Run particles
+#
+#/run/beamOn 10000000
+/run/beamOn 1000
