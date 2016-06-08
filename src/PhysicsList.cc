@@ -182,27 +182,20 @@ void PhysicsList::SetCuts()
   	G4ProductionCuts* cuts;
   	
   	// Production cuts for Sensitive Gas Volume 
-  	regName = "Region_PV_Gas";
+  	regName = "Region_Sensitive_Gas";
   	region = G4RegionStore::GetInstance()->GetRegion(regName);
   	cuts = new G4ProductionCuts;
   	cuts->SetProductionCut(10*mm); // same cuts for gamma, e- and e+
   	region->SetProductionCuts(cuts);
   	
-  	// // Production cuts for TEPC cathode 
-  	// regName = "Region_TEPC_Cathode";
-  	// region = G4RegionStore::GetInstance()->GetRegion(regName);
-  	// cuts = new G4ProductionCuts;
-  	// cuts->SetProductionCut(0.01*mm); // same cuts for gamma, e- and e+
-  	// region->SetProductionCuts(cuts);
-  	
-  	// // Production cuts for TEPC sensitive volume 
-  	// regName = "Region_TEPC_Gas";
-  	// region = G4RegionStore::GetInstance()->GetRegion(regName);
-  	// cuts = new G4ProductionCuts;
-  	// cuts->SetProductionCut(1*mm); // same cuts for gamma, e- and e+
-  	// region->SetProductionCuts(cuts); 
+  	// Production cuts for the remaining PV Gas 
+  	regName = "Region_PV_Gas";
+  	region = G4RegionStore::GetInstance()->GetRegion(regName);
+  	cuts = new G4ProductionCuts;
+  	cuts->SetProductionCut(10*mm); // same cuts for gamma, e- and e+
+  	region->SetProductionCuts(cuts);
  	 
- 	// if (verboseLevel > 0) { DumpCutValuesTable(); }
+ 	if (verboseLevel > 0) { DumpCutValuesTable(); }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -238,9 +231,9 @@ void PhysicsList::NewPAIModel(const G4ParticleDefinition* part,
 	G4String partname = part->GetParticleName();
   	if(modname == "pai") {
     	G4PAIModel* pai = new G4PAIModel(part,"PAIModel");
-    	fConfig->SetExtraEmModel(partname,procname,pai,"Region_PVSensitive_Gas", 0.0,100.*TeV,pai);
+    	fConfig->SetExtraEmModel(partname,procname,pai,"Region_Sensitive_Gas", 0.0,100.*TeV,pai);
   	} else if(modname == "pai_photon") {
     	G4PAIPhotModel* pai = new G4PAIPhotModel(part,"PAIPhotModel");
-    	fConfig->SetExtraEmModel(partname,procname,pai,"Region_PVSensitive_Gas", 0.0,100.*TeV,pai);
+    	fConfig->SetExtraEmModel(partname,procname,pai,"Region_Sensitive_Gas", 0.0,100.*TeV,pai);
   	}
 }

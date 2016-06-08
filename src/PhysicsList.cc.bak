@@ -267,10 +267,10 @@ void PhysicsList::NewPAIModel(const G4ParticleDefinition* part,
 	G4String partname = part->GetParticleName();
   	if(modname == "pai") {
     	G4PAIModel* pai = new G4PAIModel(part,"PAIModel");
-    	fConfig->SetExtraEmModel(partname,procname,pai,"Region_PVSensitive_Gas", 0.0,100.*TeV,pai);
+    	fConfig->SetExtraEmModel(partname,procname,pai,"Region_Sensitive_Gas", 0.0,100.*TeV,pai);
   	} else if(modname == "pai_photon") {
     	G4PAIPhotModel* pai = new G4PAIPhotModel(part,"PAIPhotModel");
-    	fConfig->SetExtraEmModel(partname,procname,pai,"Region_PVSensitive_Gas", 0.0,100.*TeV,pai);
+    	fConfig->SetExtraEmModel(partname,procname,pai,"Region_Sensitive_Gas", 0.0,100.*TeV,pai);
   	}
 }
 

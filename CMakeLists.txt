@@ -43,9 +43,10 @@ target_link_libraries(AdEPTCubeSat ${Geant4_LIBRARIES})
 #
 set(AdEPTCubeSat_SCRIPTS
   #runProton.mac
-  #runElectron.mac
-  #runElectron_ISO.mac
-  #runElectrons_ISO.mac
+  runElectron.mac
+  runElectron_ISO.mac
+  runElectrons_ISO.mac
+  runGamma.mac
   #run_GCR_H.mac
   #run_GCR_Fe.mac
   #runNeutron.mac

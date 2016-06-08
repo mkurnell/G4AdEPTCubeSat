@@ -108,7 +108,7 @@ WorldPhysical(0)
 	// Presure Vessel Sensitive Gas Volume
 	PV_sensitive_gas_length = 78.5*mm;
 	PV_sensitive_gas_width = 78.5*mm;
-	PV_sensitive_gas_height = 99.*mm;
+	PV_sensitive_gas_height = 95.*mm;
 	
 	// Inner Electric Field Cage
 	Cage_length = 85.*mm;
@@ -211,7 +211,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	// Cleanup
 	// G4GeometryManager::GetInstance()->OpenGeometry();	
   	// if(fRegGasDet) { delete fRegGasDet; }
-  	// fRegGasDet = new G4Region("GasRegion");
+  	// fRegGasDet = new G4Region("Region_Sensitive_Gas");
   	// fRegGasDet->SetProductionCuts(fTrackerCuts);
 	
 	// Cleanup old geometry
@@ -412,6 +412,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 							0,
 							fCheckOverlaps);
 
+	G4Region* regPVGas = new G4Region("Region_PV_Gas");
+  	PVGasLogical->SetRegion(regPVGas);
+  	regPVGas->AddRootLogicalVolume(PVGasLogical);
+	  
 	////////////////////////////////////////////////////////////////////////
 	// Pressure Vessel Sensitive Detector Gas					
 	
@@ -424,7 +428,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 							
 	PVSensitiveGasPhysical =
 		new G4PVPlacement(	0,
-							G4ThreeVector(0,0,-2.25),
+							G4ThreeVector(0,0,-0.25),
 							PVSensitiveGasLogical,
 							"SensitiveGas",
 							PVGasLogical,
@@ -432,17 +436,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 							0,
 							fCheckOverlaps);
 							
-	G4Region* regPVGas = new G4Region("Region_PV_Gas");
-  	PVSensitiveGasLogical->SetRegion(regPVGas);
-  	regPVGas->AddRootLogicalVolume(PVSensitiveGasLogical);
-	  	
-	// G4Region* regTEPCGas = new G4Region("Region_TEPC_Gas");
-  	// TEPCGasLogical->SetRegion(regTEPCGas);
-  	// regTEPCGas->AddRootLogicalVolume(TEPCGasLogical);
-	  
-	// G4Region* regTEPCCathode = new G4Region("Region_TEPC_Cathode");
-  	// TEPCCathodeLogical->SetRegion(regTEPCCathode);
-  	// regTEPCCathode->AddRootLogicalVolume(TEPCCathodeLogical);
+	G4Region* regSensitiveGas = new G4Region("Region_Sensitive_Gas");
+  	PVSensitiveGasLogical->SetRegion(regSensitiveGas);
+  	regSensitiveGas->AddRootLogicalVolume(PVSensitiveGasLogical);
 							
 	////////////////////////////////////////////////////////////////////////
 	// Top PCB in Top Pressure Vessel
@@ -547,6 +543,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 							false,
 							0,
 							fCheckOverlaps);
+	
 							
 	////////////////////////////////////////////////////////////////////////
   	// Visualisation attributes
@@ -613,7 +610,7 @@ void DetectorConstruction::ConstructSDandField()
 	G4MultiFunctionalDetector* PVGasScorer = new G4MultiFunctionalDetector("PVSensitiveGas");
 	G4SDManager::GetSDMpointer()->AddNewDetector(PVGasScorer);	
 	G4SDManager::GetSDMpointer()->SetVerboseLevel(0);
-	PVGasLogical->SetSensitiveDetector(PVGasScorer);
+	PVSensitiveGasLogical->SetSensitiveDetector(PVGasScorer);
  	
  	G4PSEnergyDeposit* eDep_Gas = new G4PSEnergyDeposit("eDep");
     PVGasScorer->RegisterPrimitive(eDep_Gas);
