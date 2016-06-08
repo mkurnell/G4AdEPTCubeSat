@@ -60,22 +60,17 @@ void Run::RecordEvent(const G4Event* event)
 	for (itr = event_PVSensitiveGas_trackLengthPassage->GetMap()->begin(); itr != event_PVSensitiveGas_trackLengthPassage->GetMap()->end(); itr++) {
 		PVSensitiveGas_trackLengthPassage += *(itr->second);
 	} 
-	
-	// Get the total energy deposited for this event in the ACD
-	// for (itr = event_ACD_eDep->GetMap()->begin(); itr != event_ACD_eDep->GetMap()->end(); itr++) {
-	// 	ACD_eDep += *(itr->second);
-	// } 
-	
+
 	// Record Sensitive Gas events with non-zero deposited energy
 	if (PVSensitiveGas_eDep > 0) {
 		// Get analysis manager
   		G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
   		
   	// Fill ntuple
-  	// 	analysisManager->FillNtupleDColumn(0, PVSensitiveGas_eDep/eV);
-  	// 	analysisManager->FillNtupleDColumn(1, PVSensitiveGas_trackLengthPassage/mm);
+  		analysisManager->FillNtupleDColumn(0, PVSensitiveGas_eDep/eV);
+  		analysisManager->FillNtupleDColumn(1, PVSensitiveGas_trackLengthPassage/mm);
   	// // 	analysisManager->FillNtupleDColumn(2, ACD_eDep/eV);
-  	// 	analysisManager->AddNtupleRow();
+  		analysisManager->AddNtupleRow();
 	}
 	
 	// Invoke base class method

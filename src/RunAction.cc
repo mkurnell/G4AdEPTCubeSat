@@ -40,12 +40,12 @@ detector(det), particleGun(primary)
   	
   	// Create ntuple 
   	// Pressure Sensitive Gas Volume
- 	// analysisManager->CreateNtuple("G4AdEPTCubeSat", "Edep and TrackLength");
- 	// analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas");
- 	// analysisManager->CreateNtupleDColumn("trackLength_PVSensitiveGas");
+ 	analysisManager->CreateNtuple("G4AdEPTCubeSat", "Edep and TrackLength");
+ 	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas");
+ 	analysisManager->CreateNtupleDColumn("trackLength_PVSensitiveGas");
  	// Anti-coincidence detector (Plastic Scintillator)
  	// analysisManager->CreateNtupleDColumn("eDep_ACD");
- 	// analysisManager->FinishNtuple();
+ 	analysisManager->FinishNtuple();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -67,14 +67,14 @@ G4Run* RunAction::GenerateRun()
 
 void RunAction::BeginOfRunAction(const G4Run* aRun)
 {
-	// Get analysis manager
+	// // Get analysis manager
   	// G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
 
   	// // Open an AnalysisManager data file for the worker threads
   	// if (!IsMaster()){
 	// 	// Filename for AnalysisManager is provided in the macro file using
 	// 	// /analysis/setFileName command
-	// 	//analysisManager->OpenFile();
+	// 	analysisManager->OpenFile();
   	// }
   	
   	// // For the master let's create an info file
@@ -85,7 +85,7 @@ void RunAction::BeginOfRunAction(const G4Run* aRun)
 	// 	// Create an information file for the run using the same filename as the Analysis Manager
     // 	outputFile_INFO = analysisManager->GetFileName() + ".info";
     	
-    // 	// Open the Information File
+   	// 	// Open the Information File
 	// 	pFile_INFO = fopen(outputFile_INFO,"w+");
 	// 	std::ofstream outFile_INFO(outputFile_INFO);
 		
@@ -100,31 +100,31 @@ void RunAction::BeginOfRunAction(const G4Run* aRun)
 
 void RunAction::EndOfRunAction(const G4Run* aRun)
 { 	
-  	// Output & close analysis file 
-	G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
-	if (!IsMaster()){
-  		analysisManager->CloseFile(); 
-  	}
+  	// // Output & close analysis file 
+	// G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
+	// if (!IsMaster()){
+  	// 	analysisManager->CloseFile(); 
+  	// }
   	
-  	// Append Source Information to the INFO file
-  	if (IsMaster()){
-		// Open the Information File
-		std::ofstream outFile_INFO(outputFile_INFO,std::ios::out|std::ios::app);
+  	// // Append Source Information to the INFO file
+  	// if (IsMaster()){
+	// 	// Open the Information File
+	// 	std::ofstream outFile_INFO(outputFile_INFO,std::ios::out|std::ios::app);
 		
-		// Get the local time at the end of the simulation
-		time_t now = time(0);
+	// 	//Get the local time at the end of the simulation
+	// 	time_t now = time(0);
     	
-    	// Export Source Information
-    	outFile_INFO << "End Time: \t\t\t" <<  ctime(&now);
-		outFile_INFO << "============================    Source Information    ============================" << G4endl;
-		outFile_INFO <<  "Number of Events: \t" << aRun->GetNumberOfEvent() << G4endl;	
-		//outFile_INFO << "============================    Detector Information    ============================" << G4endl;
-		//outFile_INFO <<  "Detector Angle: \t" << detector->GetDetectorAngle()/degree << " deg" << G4endl;	
-		outFile_INFO << "==================================================================================" << G4endl; 
+    // 	//Export Source Information
+    // 	outFile_INFO << "End Time: \t\t\t" <<  ctime(&now);
+	// 	outFile_INFO << "============================    Source Information    ============================" << G4endl;
+	// 	outFile_INFO <<  "Number of Events: \t" << aRun->GetNumberOfEvent() << G4endl;	
+	// 	//outFile_INFO << "============================    Detector Information    ============================" << G4endl;
+	// 	//outFile_INFO <<  "Detector Angle: \t" << detector->GetDetectorAngle()/degree << " deg" << G4endl;	
+	// 	outFile_INFO << "==================================================================================" << G4endl; 
 		
-		// Close file
-		fclose(pFile_INFO);
-  	}
+	// 	//Close file
+	// 	fclose(pFile_INFO);
+  	// }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

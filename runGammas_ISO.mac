@@ -1,0 +1,24 @@
+#########################
+# Set of the verboses 
+#
+/control/verbose 0
+/tracking/verbose 0
+/event/verbose 0
+/run/verbose 0
+/vis/verbose 0
+
+##########################
+# Multi-threading mode
+#
+/run/numberOfThreads 8
+
+##########################
+# Set of the physic models
+#
+/cuts/setLowEdge 990 eV
+
+##########################
+# Use a control loop to execute a macro file more than once for
+# different particle energies
+#
+/control/loop runGamma.mac Ekin 500. 1500. 100.

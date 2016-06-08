@@ -36,7 +36,7 @@
 # Particle Filter
 #/vis/filtering/trajectories/create/particleFilter
 #/vis/filtering/trajectories/particleFilter-0/add gamma
-#/vis/filtering/trajectories/particleFilter-0/add e-
+#ltering/trajectories/particleFilter-0/add e-
 #/vis/filtering/trajectories/particleFilter-0/add proton
 #/vis/filtering/trajectories/particleFilter-0/add neutron
 
@@ -48,7 +48,7 @@
 #/vis/modeling/trajectories/drawByParticleID-0/set neutron yellow
 
 # To superimpose all of the events from a given run:
-/vis/scene/endOfEventAction accumulate 1
+/vis/scene/endOfEventAction accumulate 10
 
 #/run/initialize
 /vis/viewer/rebuild

@@ -1,3 +1,5 @@
+#/analysis/setFileName gamma_{Ekin}keV_Nr_10_ISO 
+
 # Initialize The Run
 /run/initialize
 
@@ -26,5 +28,5 @@
 # Energy & Particle Type
 /gps/particle gamma
 /gps/ene/type Mono
-/gps/ene/mono 60 keV
-/run/beamOn 10
+/gps/ene/mono 200 MeV
+/run/beamOn 50

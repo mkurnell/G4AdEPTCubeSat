@@ -251,121 +251,105 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	G4Box* PVtopSolid = new G4Box("PressureVesselTop", PV_length/2, PV_width/2, PV_height/2);
 	G4Box* PVbottomSolid = new G4Box("PressureVesselBottom", PV_bottom_length/2, PV_bottom_width/2, PV_bottom_height/2);
 	
-	G4UnionSolid* PVSolid = new G4UnionSolid("PressureVessel", PVtopSolid, PVbottomSolid, 0, G4ThreeVector(0,0,(PV_height+PV_bottom_height)/2 - 0.001*mm));
-	
-	PVLogical =
-		new G4LogicalVolume(PVSolid,
-							fMatPressureVessel,
-							"PressureVessel");
-							
-	PVPhysical = 
-		new G4PVPlacement(	0,
-							G4ThreeVector(),
-							PVLogical,
-							"PressureVessel",
-							WorldLogical,
-							false,
-							0,
-							fCheckOverlaps);
+	G4UnionSolid* PVSolidBody = new G4UnionSolid("PressureVessel", PVtopSolid, PVbottomSolid, 0, G4ThreeVector(0,0,(PV_height+PV_bottom_height)/2 - 0.001*mm));
+
 	
 	////////////////////////////////////////////////////////////////////////
 	// Pressure Vessel Side Cutouts
 	
-	G4Box* PVSideCut_1 = new G4Box("PressureVesselSideCut", PV_sidecut_depth/2, PV_sidecut_length/2, PV_sidecut_width/2);
+	G4Box* PVSideCut = new G4Box("PressureVesselSideCut", PV_sidecut_depth/2, PV_sidecut_length/2, PV_sidecut_width/2);
 	
-	PVSideCutLogical_1 = 
-		new G4LogicalVolume(PVSideCut_1,
-							fMatWorld,
-							"PressureVesselSideCut");
+	// PVSideCutLogical_1 = 
+	// 	new G4LogicalVolume(PVSideCut_1,
+	// 						fMatWorld,
+	// 						"PressureVesselSideCut");
 	
-	PVSideCutPhysical_1 = 
-		new G4PVPlacement(	0,
-							G4ThreeVector((PV_width-PV_sidecut_depth)/2,0,0),
-							PVSideCutLogical_1,
-							"PressureVesselSideCut",
-							WorldLogical,
-							false,
-							0,
-							fCheckOverlaps);
+	// PVSideCutPhysical_1 = 
+	// 	new G4PVPlacement(	0,
+	// 						G4ThreeVector((PV_width-PV_sidecut_depth)/2,0,0),
+	// 						PVSideCutLogical_1,
+	// 						"PressureVesselSideCut",
+	// 						WorldLogical,
+	// 						false,
+	// 						0,
+	// 						fCheckOverlaps);
 	
-	//////////						
+	// //////////						
 							
-	G4Box* PVSideCut_2 = new G4Box("PressureVesselSideCut", PV_sidecut_depth/2, PV_sidecut_length/2, PV_sidecut_width/2);
+	// G4Box* PVSideCut_2 = new G4Box("PressureVesselSideCut", PV_sidecut_depth/2, PV_sidecut_length/2, PV_sidecut_width/2);
 	
-	PVSideCutLogical_2 = 
-		new G4LogicalVolume(PVSideCut_2,
-							fMatWorld,
-							"PressureVesselSideCut");
+	// PVSideCutLogical_2 = 
+	// 	new G4LogicalVolume(PVSideCut_2,
+	// 						fMatWorld,
+	// 						"PressureVesselSideCut");
 	
-	PVSideCutPhysical_2 = 
-		new G4PVPlacement(	0,
-							G4ThreeVector(-(PV_width-PV_sidecut_depth)/2,0,0),
-							PVSideCutLogical_2,
-							"PressureVesselSideCut",
-							WorldLogical,
-							false,
-							0,
-							fCheckOverlaps);
+	// PVSideCutPhysical_2 = 
+	// 	new G4PVPlacement(	0,
+	// 						G4ThreeVector(-(PV_width-PV_sidecut_depth)/2,0,0),
+	// 						PVSideCutLogical_2,
+	// 						"PressureVesselSideCut",
+	// 						WorldLogical,
+	// 						false,
+	// 						0,
+	// 						fCheckOverlaps);
 							
-	//////////		
+	// //////////		
 							
 	G4Box* PVSideCut_3 = new G4Box("PressureVesselSideCut", PV_sidecut_length/2, PV_sidecut_depth/2, PV_sidecut_width/2);
 	
-	PVSideCutLogical_3 = 
-		new G4LogicalVolume(PVSideCut_3,
-							fMatWorld,
-							"PressureVesselSideCut");
+	// PVSideCutLogical_3 = 
+	// 	new G4LogicalVolume(PVSideCut_3,
+	// 						fMatWorld,
+	// 						"PressureVesselSideCut");
 	
-	PVSideCutPhysical_3 = 
-		new G4PVPlacement(	0,
-							G4ThreeVector(0,(PV_width-PV_sidecut_depth)/2,0),
-							PVSideCutLogical_3,
-							"PressureVesselSideCut",
-							WorldLogical,
-							false,
-							0,
-							fCheckOverlaps);
+	// PVSideCutPhysical_3 = 
+	// 	new G4PVPlacement(	0,
+	// 						G4ThreeVector(0,(PV_width-PV_sidecut_depth)/2,0),
+	// 						PVSideCutLogical_3,
+	// 						"PressureVesselSideCut",
+	// 						WorldLogical,
+	// 						false,
+	// 						0,
+	// 						fCheckOverlaps);
 							
-	//////////		
+	// //////////		
 
-	G4Box* PVSideCut_4 = new G4Box("PressureVesselSideCut", PV_sidecut_length/2, PV_sidecut_depth/2, PV_sidecut_width/2);
+	// G4Box* PVSideCut_4 = new G4Box("PressureVesselSideCut", PV_sidecut_length/2, PV_sidecut_depth/2, PV_sidecut_width/2);
 	
-	PVSideCutLogical_4 = 
-		new G4LogicalVolume(PVSideCut_4,
-							fMatWorld,
-							"PressureVesselSideCut");
+	// PVSideCutLogical_4 = 
+	// 	new G4LogicalVolume(PVSideCut_4,
+	// 						fMatWorld,
+	// 						"PressureVesselSideCut");
 	
-	PVSideCutPhysical_4 = 
-		new G4PVPlacement(	0,
-							G4ThreeVector(0,-(PV_width-PV_sidecut_depth)/2,0),
-							PVSideCutLogical_4,
-							"PressureVesselSideCut",
-							WorldLogical,
-							false,
-							0,
-							fCheckOverlaps);
+	// PVSideCutPhysical_4 = 
+	// 	new G4PVPlacement(	0,
+	// 						G4ThreeVector(0,-(PV_width-PV_sidecut_depth)/2,0),
+	// 						PVSideCutLogical_4,
+	// 						"PressureVesselSideCut",
+	// 						WorldLogical,
+	// 						false,
+	// 						0,
+	// 						fCheckOverlaps);
 	
-	// ***Look at example B2b and maybe do the physicals with G4PVParameterized
-	
-	////////////////////////////////////////////////////////////////////////
-	// Pressure Vessel Top Cutouts
+	// ////////////////////////////////////////////////////////////////////////
+	// // Pressure Vessel Top Cutouts
 	
 	G4Box* PVTopCut = new G4Box("PressureVesselTopCut", PV_topcut_length/2, PV_topcut_width/2, PV_topcut_depth/2);
 	
-	PVTopCutLogical = 
-		new G4LogicalVolume(PVTopCut,
-							fMatWorld,
-							"PressureVesselTopCut");
+	// PVTopCutLogical = 
+	// 	new G4LogicalVolume(PVTopCut,
+	// 						fMatWorld,
+	// 						"PressureVesselTopCut");
 							
-	PVTopCutPhysical = 
-		new G4PVPlacement(	0,
-							G4ThreeVector(0,0,-(PV_height-PV_topcut_depth)/2),
-							PVTopCutLogical,
-							"PressureVesselTopCut",
-							WorldLogical,
-							false,
-							0,
-							fCheckOverlaps);
+	// PVTopCutPhysical = 
+	// 	new G4PVPlacement(	0,
+	// 						G4ThreeVector(0,0,-(PV_height-PV_topcut_depth)/2),
+	// 						PVTopCutLogical,
+	// 						"PressureVesselTopCut",
+	// 						WorldLogical,
+	// 						false,
+	// 						0,
+	// 						fCheckOverlaps);
 								
 	////////////////////////////////////////////////////////////////////////
 	// Pressure Vessel Bottom Cutouts
@@ -386,6 +370,39 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	// 						false,
 	// 						0,
 	// 						fCheckOverlaps);
+	
+	////////////////////////////////////////////////////////////////////////
+	// Subtraction of cutouts from Pressure Vessel
+	
+	G4SubtractionSolid* PVSolid_1 = 
+		new G4SubtractionSolid("PressureVesselSolid", PVSolidBody, PVSideCut, 0, G4ThreeVector((PV_width-PV_sidecut_depth)/2,0,0));
+	
+	G4SubtractionSolid* PVSolid_2 = 
+		new G4SubtractionSolid("PressureVesselSolid", PVSolid_1, PVSideCut, 0, G4ThreeVector(-(PV_width-PV_sidecut_depth)/2,0,0));
+	
+	G4SubtractionSolid* PVSolid_3 = 
+		new G4SubtractionSolid("PressureVesselSolid", PVSolid_2, PVSideCut_3, 0, G4ThreeVector(0,(PV_width-PV_sidecut_depth)/2,0));
+	
+	G4SubtractionSolid* PVSolid_4 = 
+		new G4SubtractionSolid("PressureVesselSolid", PVSolid_3, PVSideCut_3, 0, G4ThreeVector(0,-(PV_width-PV_sidecut_depth)/2,0));
+	
+	G4SubtractionSolid* PVSolid =
+		new G4SubtractionSolid("PressureVesselSolid", PVSolid_4, PVTopCut, 0, G4ThreeVector(0,0,-(PV_height-PV_topcut_depth)/2));
+	
+	PVLogical =
+		new G4LogicalVolume(PVSolid,
+							fMatPressureVessel,
+							"PressureVessel");
+							
+	PVPhysical = 
+		new G4PVPlacement(	0,
+							G4ThreeVector(),
+							PVLogical,
+							"PressureVessel",
+							WorldLogical,
+							false,
+							0,
+							fCheckOverlaps);
 
 	////////////////////////////////////////////////////////////////////////
 	// Pressure Vessel Detector Gas
@@ -559,13 +576,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   	PVLogical->SetVisAttributes(Vis_PV);
 	  
   	// ** Pressure Vessel Cutouts
-  	G4VisAttributes* Vis_Cutout = new G4VisAttributes(G4Colour(0.,0.,0.,0.2));
-  	Vis_Cutout->SetForceWireframe(false);
-  	PVSideCutLogical_1->SetVisAttributes(Vis_Cutout);
-	PVSideCutLogical_2->SetVisAttributes(Vis_Cutout);
-	PVSideCutLogical_3->SetVisAttributes(Vis_Cutout);
-	PVSideCutLogical_4->SetVisAttributes(Vis_Cutout);
-  	PVTopCutLogical->SetVisAttributes(Vis_Cutout);
+  	// G4VisAttributes* Vis_Cutout = new G4VisAttributes(G4Colour(0.,0.,0.,0.2));
+  	// Vis_Cutout->SetForceWireframe(false);
+  	// PVSideCutLogical_1->SetVisAttributes(Vis_Cutout);
+	// PVSideCutLogical_2->SetVisAttributes(Vis_Cutout);
+	// PVSideCutLogical_3->SetVisAttributes(Vis_Cutout);
+	// PVSideCutLogical_4->SetVisAttributes(Vis_Cutout);
+  	// PVTopCutLogical->SetVisAttributes(Vis_Cutout);
 	// PVBottomCutLogical->SetVisAttributes(Vis_Cutout);
   	
   	// ** Pressure Vessel Gas Volume
@@ -625,12 +642,4 @@ void DetectorConstruction::DefineCommands()
 {
     // Define /AdEPTCubeSat/ command directory using generic messenger class
     fMessenger = new G4GenericMessenger(this, "/AdEPTCubeSat/", "Geometry control");
-
-//     // Converter Thickness Command
-//     G4GenericMessenger::Command& DetectorAngleCmd
-//       = fMessenger->DeclareMethodWithUnit("DetectorAngle","deg",
-//                                   &DetectorConstruction::SetDetectorAngle, 
-//                                   "Set the angle of the detector within the world volume.");
-//     DetectorAngleCmd.SetParameterName("angle", true);
-//     DetectorAngleCmd.SetDefaultValue("0.0");
 }
