@@ -43,8 +43,7 @@ detector(det), particleGun(primary)
  	analysisManager->CreateNtuple("G4AdEPTCubeSat", "Edep and TrackLength");
  	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas");
  	analysisManager->CreateNtupleDColumn("trackLength_PVSensitiveGas");
- 	// Anti-coincidence detector (Plastic Scintillator)
- 	// analysisManager->CreateNtupleDColumn("eDep_ACD");
+	analysisManager->CreateNtupleDColumn("ionizations");
  	analysisManager->FinishNtuple();
 }
 
@@ -119,7 +118,7 @@ void RunAction::EndOfRunAction(const G4Run* aRun)
 	// 	outFile_INFO << "============================    Source Information    ============================" << G4endl;
 	// 	outFile_INFO <<  "Number of Events: \t" << aRun->GetNumberOfEvent() << G4endl;	
 	// 	//outFile_INFO << "============================    Detector Information    ============================" << G4endl;
-	// 	//outFile_INFO <<  "Detector Angle: \t" << detector->GetDetectorAngle()/degree << " deg" << G4endl;	
+	// 	//outFile_INFO <<  "Number of Ionizations: \t" << detector->GetDetectorAngle()/degree << " deg" << G4endl;	
 	// 	outFile_INFO << "==================================================================================" << G4endl; 
 		
 	// 	//Close file

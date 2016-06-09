@@ -1,4 +1,5 @@
-/analysis/setFileName gamma_{Ekin}keV_Nr_100000000_ISO 
+# Sset the output file name
+/analysis/setFileName gamma_{Ekin}keV_Nr_10000_ISO 
 
 # Initialize The Run
 /run/initialize

@@ -18,7 +18,7 @@ Run::Run():G4Run()
     	
     ID_PVSensitiveGas_eDep = SDMan->GetCollectionID("PVSensitiveGas/eDep");
 	ID_PVSensitiveGas_trackLengthPassage = SDMan->GetCollectionID("PVSensitiveGas/trackLengthPassage");
-	// ID_ACD_eDep = SDMan->GetCollectionID("ACD/eDep");
+	ID_PVSensitiveGas_ionizations = SDMan->GetCollectionID("PVSensitiveGas/ionizations");
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -42,12 +42,12 @@ void Run::RecordEvent(const G4Event* event)
 	// Zero out the variables
 	G4double PVSensitiveGas_eDep = 0.;
 	G4double PVSensitiveGas_trackLengthPassage = 0.;
-	// G4double ACD_eDep = 0.;
+	G4double PVSensitiveGas_ionizations = 0.;
 	
 	// Get the HitMaps for this event
 	G4THitsMap<G4double>* event_PVSensitiveGas_eDep = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_eDep));
 	G4THitsMap<G4double>* event_PVSensitiveGas_trackLengthPassage = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_trackLengthPassage));
-	// G4THitsMap<G4double>* event_ACD_eDep = (G4THitsMap<G4double>*)(HCE->GetHC(ID_ACD_eDep));
+	G4THitsMap<G4double>* event_PVSensitiveGas_ionizations = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_ionizations));
 	
 	std::map<G4int,G4double*>::iterator itr;
 	
@@ -61,6 +61,10 @@ void Run::RecordEvent(const G4Event* event)
 		PVSensitiveGas_trackLengthPassage += *(itr->second);
 	} 
 
+	// Get the number of secondary ionizations in the Sensitive Gas Volume
+	for (itr = event_PVSensitiveGas_ionizations->GetMap()->begin(); itr != event_PVSensitiveGas_ionizations->GetMap()->end(); itr++) {
+		PVSensitiveGas_ionizations += *(itr->second);
+	}
 	// Record Sensitive Gas events with non-zero deposited energy
 	if (PVSensitiveGas_eDep > 0) {
 		// Get analysis manager
@@ -69,7 +73,7 @@ void Run::RecordEvent(const G4Event* event)
   	// Fill ntuple
   		analysisManager->FillNtupleDColumn(0, PVSensitiveGas_eDep/eV);
   		analysisManager->FillNtupleDColumn(1, PVSensitiveGas_trackLengthPassage/mm);
-  	// // 	analysisManager->FillNtupleDColumn(2, ACD_eDep/eV);
+  		analysisManager->FillNtupleDColumn(2, PVSensitiveGas_ionizations);
   		analysisManager->AddNtupleRow();
 	}
 	

@@ -55,6 +55,7 @@
 #include "G4PSTrackLength.hh"
 #include "G4PSPassageTrackLength.hh"
 #include "G4PSPassageCellCurrent.hh"
+#include "G4PSNofSecondary.hh"
 
 #include "G4ProductionCuts.hh"
 
@@ -634,6 +635,9 @@ void DetectorConstruction::ConstructSDandField()
     
     G4PSPassageTrackLength* trackLengthPassage_Gas = new G4PSPassageTrackLength("trackLengthPassage");
  	PVGasScorer->RegisterPrimitive(trackLengthPassage_Gas);
+	 
+	G4PSNofSecondary* ionizations_Gas = new G4PSNofSecondary("ionizations");
+	PVGasScorer->RegisterPrimitive(ionizations_Gas);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
