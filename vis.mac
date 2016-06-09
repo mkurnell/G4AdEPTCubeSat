@@ -54,6 +54,6 @@
 /vis/viewer/rebuild
 
 #/control/execute runElectron.mac
-/control/execute runGamma.mac
+#/control/execute runGamma.mac
 #/control/execute runElectron_ISO.mac
 #/control/execute runElectrons_ISO.mac

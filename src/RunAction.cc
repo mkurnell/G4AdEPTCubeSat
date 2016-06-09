@@ -66,32 +66,32 @@ G4Run* RunAction::GenerateRun()
 
 void RunAction::BeginOfRunAction(const G4Run* aRun)
 {
-	// // Get analysis manager
-  	// G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
+	// Get analysis manager
+  	G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
 
-  	// // Open an AnalysisManager data file for the worker threads
-  	// if (!IsMaster()){
-	// 	// Filename for AnalysisManager is provided in the macro file using
-	// 	// /analysis/setFileName command
-	// 	analysisManager->OpenFile();
-  	// }
+  	// Open an AnalysisManager data file for the worker threads
+  	if (!IsMaster()){
+		// Filename for AnalysisManager is provided in the macro file using
+		// /analysis/setFileName command
+		analysisManager->OpenFile();
+  	}
   	
-  	// // For the master let's create an info file
-  	// if (IsMaster()){
-	// 	// Get the local time at the start of the simulation
-	// 	time_t now = time(0);
+  	// For the master let's create an info file
+  	if (IsMaster()){
+		// Get the local time at the start of the simulation
+		time_t now = time(0);
 		
-	// 	// Create an information file for the run using the same filename as the Analysis Manager
-    // 	outputFile_INFO = analysisManager->GetFileName() + ".info";
+		// Create an information file for the run using the same filename as the Analysis Manager
+    	outputFile_INFO = analysisManager->GetFileName() + ".info";
     	
-   	// 	// Open the Information File
-	// 	pFile_INFO = fopen(outputFile_INFO,"w+");
-	// 	std::ofstream outFile_INFO(outputFile_INFO);
+   		// Open the Information File
+		pFile_INFO = fopen(outputFile_INFO,"w+");
+		std::ofstream outFile_INFO(outputFile_INFO);
 		
-	// 	// Export Source Information
-	// 	outFile_INFO << "============================    Simulation Information    ============================" << G4endl;
-	// 	outFile_INFO << "Start Time: \t\t" <<  ctime(&now);
-  	// }
+		// Export Source Information
+		outFile_INFO << "============================    Simulation Information    ============================" << G4endl;
+		outFile_INFO << "Start Time: \t\t" <<  ctime(&now);
+  	}
   	
 }
 
@@ -99,31 +99,31 @@ void RunAction::BeginOfRunAction(const G4Run* aRun)
 
 void RunAction::EndOfRunAction(const G4Run* aRun)
 { 	
-  	// // Output & close analysis file 
-	// G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
-	// if (!IsMaster()){
-  	// 	analysisManager->CloseFile(); 
-  	// }
+  	// Output & close analysis file 
+	G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
+	if (!IsMaster()){
+  		analysisManager->CloseFile(); 
+  	}
   	
-  	// // Append Source Information to the INFO file
-  	// if (IsMaster()){
-	// 	// Open the Information File
-	// 	std::ofstream outFile_INFO(outputFile_INFO,std::ios::out|std::ios::app);
+  	// Append Source Information to the INFO file
+  	if (IsMaster()){
+		// Open the Information File
+		std::ofstream outFile_INFO(outputFile_INFO,std::ios::out|std::ios::app);
 		
-	// 	//Get the local time at the end of the simulation
-	// 	time_t now = time(0);
+		//Get the local time at the end of the simulation
+		time_t now = time(0);
     	
-    // 	//Export Source Information
-    // 	outFile_INFO << "End Time: \t\t\t" <<  ctime(&now);
-	// 	outFile_INFO << "============================    Source Information    ============================" << G4endl;
-	// 	outFile_INFO <<  "Number of Events: \t" << aRun->GetNumberOfEvent() << G4endl;	
-	// 	//outFile_INFO << "============================    Detector Information    ============================" << G4endl;
-	// 	//outFile_INFO <<  "Number of Ionizations: \t" << detector->GetDetectorAngle()/degree << " deg" << G4endl;	
-	// 	outFile_INFO << "==================================================================================" << G4endl; 
+    	//Export Source Information
+    	outFile_INFO << "End Time: \t\t\t" <<  ctime(&now);
+		outFile_INFO << "============================    Source Information    ============================" << G4endl;
+		outFile_INFO <<  "Number of Events: \t" << aRun->GetNumberOfEvent() << G4endl;	
+		//outFile_INFO << "============================    Detector Information    ============================" << G4endl;
+		//outFile_INFO <<  "Number of Ionizations: \t" << detector->GetDetectorAngle()/degree << " deg" << G4endl;	
+		outFile_INFO << "==================================================================================" << G4endl; 
 		
-	// 	//Close file
-	// 	fclose(pFile_INFO);
-  	// }
+		//Close file
+		fclose(pFile_INFO);
+  	}
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

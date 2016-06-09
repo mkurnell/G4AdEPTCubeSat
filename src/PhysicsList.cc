@@ -44,7 +44,7 @@ PhysicsList::PhysicsList() : G4VModularPhysicsList(),
   	SetDefaultCutValue(0.5*mm);
   	
   	// Verbosity level
-  	SetVerboseLevel(1);
+  	SetVerboseLevel(0);
 
   	// Decay Physics is always defined
   	fDecayPhysicsList = new G4DecayPhysics();

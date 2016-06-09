@@ -10,7 +10,7 @@
 #########################
 # Set detector parameters
 #
-/CNPTEPC/DetectorAngle 0.0 deg
+#/CNPTEPC/DetectorAngle 0.0 deg
 
 ##########################
 # Multi-threading mode
@@ -26,4 +26,4 @@
 # Use a control loop to execute a macro file more than once for
 # different particle energies
 #
-/control/loop runElectron_ISO.mac Ekin 10. 90. 10.
+/control/loop runElectron_ISO.mac Ekin 2000. 10000. 1000.
