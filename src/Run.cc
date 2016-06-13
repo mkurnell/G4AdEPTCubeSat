@@ -16,7 +16,8 @@ Run::Run():G4Run()
 {
 	G4SDManager* SDMan = G4SDManager::GetSDMpointer(); 
     	
-    ID_PVSensitiveGas_eDep = SDMan->GetCollectionID("PVSensitiveGas/eDep");
+    ID_PVSensitiveGas_eDep_Positron = SDMan->GetCollectionID("PVSensitiveGas/eDepP");
+	ID_PVSensitiveGas_eDep_Electron = SDMan->GetCollectionID("PVSensitiveGas/eDepE");
 	ID_PVSensitiveGas_trackLengthPassage = SDMan->GetCollectionID("PVSensitiveGas/trackLengthPassage");
 	ID_PVSensitiveGas_ionizations = SDMan->GetCollectionID("PVSensitiveGas/ionizations");
 }
@@ -40,20 +41,27 @@ void Run::RecordEvent(const G4Event* event)
   	} 
   	
 	// Zero out the variables
-	G4double PVSensitiveGas_eDep = 0.;
+	G4double PVSensitiveGas_eDep_Positron = 0.;
+	G4double PVSensitiveGas_eDep_Electron = 0.;
 	G4double PVSensitiveGas_trackLengthPassage = 0.;
 	G4double PVSensitiveGas_ionizations = 0.;
 	
 	// Get the HitMaps for this event
-	G4THitsMap<G4double>* event_PVSensitiveGas_eDep = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_eDep));
+	G4THitsMap<G4double>* event_PVSensitiveGas_eDep_Positron = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_eDep_Positron));
+	G4THitsMap<G4double>* event_PVSensitiveGas_eDep_Electron = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_eDep_Electron));
 	G4THitsMap<G4double>* event_PVSensitiveGas_trackLengthPassage = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_trackLengthPassage));
 	G4THitsMap<G4double>* event_PVSensitiveGas_ionizations = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_ionizations));
 	
 	std::map<G4int,G4double*>::iterator itr;
 	
 	// Get the total energy deposited for this event in the Sensitive Gas Volume
-	for (itr = event_PVSensitiveGas_eDep->GetMap()->begin(); itr != event_PVSensitiveGas_eDep->GetMap()->end(); itr++) {
-		PVSensitiveGas_eDep += *(itr->second);
+	for (itr = event_PVSensitiveGas_eDep_Positron->GetMap()->begin(); itr != event_PVSensitiveGas_eDep_Positron->GetMap()->end(); itr++) {
+		PVSensitiveGas_eDep_Positron += *(itr->second);
+	}
+	
+	// Get the total energy deposited for this event in the Sensitive Gas Volume
+	for (itr = event_PVSensitiveGas_eDep_Electron->GetMap()->begin(); itr != event_PVSensitiveGas_eDep_Electron->GetMap()->end(); itr++) {
+		PVSensitiveGas_eDep_Electron += *(itr->second);
 	}
 	
 	// Get the passage track length for this event in the Sensitive Gas Volume
@@ -66,14 +74,15 @@ void Run::RecordEvent(const G4Event* event)
 		PVSensitiveGas_ionizations += *(itr->second);
 	}
 	// Record Sensitive Gas events with non-zero deposited energy
-	if (PVSensitiveGas_eDep > 0) {
+	if (PVSensitiveGas_eDep_Electron > 0) {
 		// Get analysis manager
   		G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
   		
   	// Fill ntuple
-  		analysisManager->FillNtupleDColumn(0, PVSensitiveGas_eDep/eV);
-  		analysisManager->FillNtupleDColumn(1, PVSensitiveGas_trackLengthPassage/mm);
-  		analysisManager->FillNtupleDColumn(2, PVSensitiveGas_ionizations);
+  		analysisManager->FillNtupleDColumn(0, PVSensitiveGas_eDep_Positron/eV);
+		analysisManager->FillNtupleDColumn(1, PVSensitiveGas_eDep_Electron/eV);
+  		analysisManager->FillNtupleDColumn(2, PVSensitiveGas_trackLengthPassage/mm);
+  		analysisManager->FillNtupleDColumn(3, PVSensitiveGas_ionizations);
   		analysisManager->AddNtupleRow();
 	}
 	

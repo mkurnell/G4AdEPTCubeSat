@@ -56,7 +56,8 @@
 #include "G4PSPassageTrackLength.hh"
 #include "G4PSPassageCellCurrent.hh"
 #include "G4PSNofSecondary.hh"
-
+#include "G4VSDFilter.hh"
+#include "G4SDParticleFilter.hh"
 #include "G4ProductionCuts.hh"
 
 
@@ -629,10 +630,20 @@ void DetectorConstruction::ConstructSDandField()
 	G4SDManager::GetSDMpointer()->AddNewDetector(PVGasScorer);	
 	G4SDManager::GetSDMpointer()->SetVerboseLevel(0);
 	PVSensitiveGasLogical->SetSensitiveDetector(PVGasScorer);
- 	
- 	G4PSEnergyDeposit* eDep_Gas = new G4PSEnergyDeposit("eDep");
-    PVGasScorer->RegisterPrimitive(eDep_Gas);
-    
+	
+	G4VSDFilter* PositronFilter = new G4SDParticleFilter("positronFilter","e+");
+ 	// G4PSEnergyDeposit* eDep_Gas = new G4PSEnergyDeposit("eDep");
+    // PVGasScorer->RegisterPrimitive(eDep_Gas);
+	// *** Trial
+	G4VPrimitiveScorer* eDep_Gas_Positron = new G4PSEnergyDeposit("eDepP");
+	eDep_Gas_Positron->SetFilter(PositronFilter);
+    PVGasScorer->RegisterPrimitive(eDep_Gas_Positron);
+	
+	G4VSDFilter* ElectronFilter = new G4SDParticleFilter("electronFilter","e-");
+	G4VPrimitiveScorer* eDep_Gas_Electron = new G4PSEnergyDeposit("eDepE");
+	eDep_Gas_Electron->SetFilter(ElectronFilter);
+	PVGasScorer->RegisterPrimitive(eDep_Gas_Electron);
+    // *** End Trial
     G4PSPassageTrackLength* trackLengthPassage_Gas = new G4PSPassageTrackLength("trackLengthPassage");
  	PVGasScorer->RegisterPrimitive(trackLengthPassage_Gas);
 	 

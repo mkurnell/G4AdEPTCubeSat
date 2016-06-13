@@ -21,4 +21,4 @@
 # Use a control loop to execute a macro file more than once for
 # different particle energies
 #
-/control/loop runGamma_ISO.mac Ekin 1000000. 9000000. 1000000.
+/control/loop runGamma_ISO.mac Ekin 100000. 900000. 100000.
