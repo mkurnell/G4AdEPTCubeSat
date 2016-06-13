@@ -1,7 +1,7 @@
 # G4AdEPTCubeSat
 G4AdEPTCubeSat is a simulation of the Advanced Energetic Pair Telescope's (AdEPT) imaging instrument scaled down for a cubesat mission. The application is based on the Geant4 Monte Carlo toolkit which allows simulation of the response of the instrument to different radiation environments.
 
-# Build Nots
+# Build Notes
 To build this application on your computer, ensure that you have a working version of CMake and Geant 4.10 or higher. You will also need OpenCV, OpenGL and Qt to be working with your Geant4 install if you wish to see a visualization of the detector.
 
 For simplicity, I recommend using the following directory structure:
