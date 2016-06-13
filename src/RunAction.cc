@@ -41,10 +41,12 @@ detector(det), particleGun(primary)
   	// Create ntuple 
   	// Pressure Sensitive Gas Volume
  	analysisManager->CreateNtuple("G4AdEPTCubeSat", "Edep and TrackLength");
+	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas");
  	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas_Positron");
 	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas_Electron");
  	analysisManager->CreateNtupleDColumn("trackLength_PVSensitiveGas");
-	analysisManager->CreateNtupleDColumn("ionizations");
+	analysisManager->CreateNtupleDColumn("Secondary Electrons");
+	analysisManager->CreateNtupleDColumn("Secondary Photons");
  	analysisManager->FinishNtuple();
 }
 

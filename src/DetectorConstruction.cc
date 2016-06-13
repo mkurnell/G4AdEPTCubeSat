@@ -631,24 +631,39 @@ void DetectorConstruction::ConstructSDandField()
 	G4SDManager::GetSDMpointer()->SetVerboseLevel(0);
 	PVSensitiveGasLogical->SetSensitiveDetector(PVGasScorer);
 	
+	// MFD Fitlers
+	G4VSDFilter* ElectronFilter = new G4SDParticleFilter("electronFilter","e-");
 	G4VSDFilter* PositronFilter = new G4SDParticleFilter("positronFilter","e+");
- 	// G4PSEnergyDeposit* eDep_Gas = new G4PSEnergyDeposit("eDep");
-    // PVGasScorer->RegisterPrimitive(eDep_Gas);
-	// *** Trial
+	G4VSDFilter* PhotonFilter = new G4SDParticleFilter("gammaFilter","gamma");
+
+	// Total Edep/, Count secondary photons/, count electrons/, positrons
+	
+	// Total Energy deposited in the Sensitive Gas Volume
+	G4VPrimitiveScorer* eDep_Gas = new G4PSEnergyDeposit("eDep");
+    PVGasScorer->RegisterPrimitive(eDep_Gas);
+	
+	// Energy deposited from positrons in the Sensitive Gas Volume;
 	G4VPrimitiveScorer* eDep_Gas_Positron = new G4PSEnergyDeposit("eDepP");
 	eDep_Gas_Positron->SetFilter(PositronFilter);
     PVGasScorer->RegisterPrimitive(eDep_Gas_Positron);
 	
-	G4VSDFilter* ElectronFilter = new G4SDParticleFilter("electronFilter","e-");
+	// Energy deposited from Electrons in the Sensitive Gas Volume
 	G4VPrimitiveScorer* eDep_Gas_Electron = new G4PSEnergyDeposit("eDepE");
 	eDep_Gas_Electron->SetFilter(ElectronFilter);
 	PVGasScorer->RegisterPrimitive(eDep_Gas_Electron);
-    // *** End Trial
+
     G4PSPassageTrackLength* trackLengthPassage_Gas = new G4PSPassageTrackLength("trackLengthPassage");
  	PVGasScorer->RegisterPrimitive(trackLengthPassage_Gas);
 	 
-	G4PSNofSecondary* ionizations_Gas = new G4PSNofSecondary("ionizations");
-	PVGasScorer->RegisterPrimitive(ionizations_Gas);
+	// Number of secondary electrons
+	G4PSNofSecondary* secondaryElectrons = new G4PSNofSecondary("secondaryElectrons");
+	secondaryElectrons->SetFilter(ElectronFilter);
+	PVGasScorer->RegisterPrimitive(secondaryElectrons);
+	
+	// Number of secondary photons
+	G4PSNofSecondary* secondaryPhotons = new G4PSNofSecondary("secondaryPhotons");
+	secondaryPhotons->SetFilter(PhotonFilter);
+	PVGasScorer->RegisterPrimitive(secondaryPhotons);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

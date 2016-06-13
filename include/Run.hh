@@ -19,10 +19,12 @@ class Run : public G4Run
 // 		virtual void Merge(const G4Run*);
 
 	private:
+		G4int ID_PVSensitiveGas_eDep;
 		G4int ID_PVSensitiveGas_eDep_Positron;
 		G4int ID_PVSensitiveGas_eDep_Electron;
 		G4int ID_PVSensitiveGas_trackLengthPassage;
-		G4int ID_PVSensitiveGas_ionizations;
+		G4int ID_PVSensitiveGas_secondaryElectrons;
+		G4int ID_PVSensitiveGas_secondaryPhotons;
 };
 
 #endif
