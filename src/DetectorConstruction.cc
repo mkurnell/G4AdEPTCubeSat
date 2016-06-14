@@ -660,6 +660,11 @@ void DetectorConstruction::ConstructSDandField()
 	secondaryElectrons->SetFilter(ElectronFilter);
 	PVGasScorer->RegisterPrimitive(secondaryElectrons);
 	
+	// Number of secondary positrons
+	G4PSNofSecondary* secondaryPositrons = new G4PSNofSecondary("secondaryPositrons");
+	secondaryPositrons->SetFilter(PositronFilter);
+	PVGasScorer->RegisterPrimitive(secondaryPositrons);
+	
 	// Number of secondary photons
 	G4PSNofSecondary* secondaryPhotons = new G4PSNofSecondary("secondaryPhotons");
 	secondaryPhotons->SetFilter(PhotonFilter);

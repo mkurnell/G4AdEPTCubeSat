@@ -47,6 +47,7 @@ detector(det), particleGun(primary)
  	analysisManager->CreateNtupleDColumn("trackLength_PVSensitiveGas");
 	analysisManager->CreateNtupleDColumn("Secondary Electrons");
 	analysisManager->CreateNtupleDColumn("Secondary Photons");
+	analysisManager->CreateNtupleDColumn("Secondary Positrons");
  	analysisManager->FinishNtuple();
 }
 

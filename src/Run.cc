@@ -20,7 +20,10 @@ Run::Run():G4Run()
 	ID_PVSensitiveGas_eDep_Electron = SDMan->GetCollectionID("PVSensitiveGas/eDepE");
 	ID_PVSensitiveGas_trackLengthPassage = SDMan->GetCollectionID("PVSensitiveGas/trackLengthPassage");
 	ID_PVSensitiveGas_secondaryElectrons = SDMan->GetCollectionID("PVSensitiveGas/secondaryElectrons");
+	ID_PVSensitiveGas_secondaryPositrons = SDMan->GetCollectionID("PVSensitiveGas/secondaryPositrons");
 	ID_PVSensitiveGas_secondaryPhotons = SDMan->GetCollectionID("PVSensitiveGas/secondaryPhotons");
+	ID_PVSensitiveGas_secondaryPositrons = SDMan->GetCollectionID("PVSensitiveGas/secondaryPositrons");
+		
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -48,6 +51,7 @@ void Run::RecordEvent(const G4Event* event)
 	G4double PVSensitiveGas_trackLengthPassage = 0.;
 	G4double PVSensitiveGas_secondaryElectrons = 0.;
 	G4double PVSensitiveGas_secondaryPhotons = 0.;
+	G4double PVSensitiveGas_secondaryPositrons = 0.;
 	
 	// Get the HitMaps for this event
 	G4THitsMap<G4double>* event_PVSensitiveGas_eDep = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_eDep));
@@ -56,6 +60,7 @@ void Run::RecordEvent(const G4Event* event)
 	G4THitsMap<G4double>* event_PVSensitiveGas_trackLengthPassage = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_trackLengthPassage));
 	G4THitsMap<G4double>* event_PVSensitiveGas_secondaryElectrons = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_secondaryElectrons));
 	G4THitsMap<G4double>* event_PVSensitiveGas_secondaryPhotons = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_secondaryPhotons));
+	G4THitsMap<G4double>* event_PVSensitiveGas_secondaryPositrons = (G4THitsMap<G4double>*)(HCE->GetHC(ID_PVSensitiveGas_secondaryPositrons));
 	
 	std::map<G4int,G4double*>::iterator itr;
 	
@@ -89,6 +94,11 @@ void Run::RecordEvent(const G4Event* event)
 		PVSensitiveGas_secondaryPhotons += *(itr->second);
 	}
 	
+	// Get the number of secondary positrons in the Sensitive Gas Volume
+	for (itr = event_PVSensitiveGas_secondaryPositrons->GetMap()->begin(); itr != event_PVSensitiveGas_secondaryPositrons->GetMap()->end(); itr++) {
+		PVSensitiveGas_secondaryPositrons += *(itr->second);
+	}
+	
 	// Record Sensitive Gas events with non-zero deposited energy
 	if (PVSensitiveGas_eDep > 0) {
 		// Get analysis manager
@@ -101,6 +111,7 @@ void Run::RecordEvent(const G4Event* event)
   		analysisManager->FillNtupleDColumn(3, PVSensitiveGas_trackLengthPassage/mm);
   		analysisManager->FillNtupleDColumn(4, PVSensitiveGas_secondaryElectrons);
 		analysisManager->FillNtupleDColumn(5, PVSensitiveGas_secondaryPhotons);
+		analysisManager->FillNtupleDColumn(6, PVSensitiveGas_secondaryPositrons);
   		analysisManager->AddNtupleRow();
 	}
 	

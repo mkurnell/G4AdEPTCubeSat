@@ -24,6 +24,7 @@ class Run : public G4Run
 		G4int ID_PVSensitiveGas_eDep_Electron;
 		G4int ID_PVSensitiveGas_trackLengthPassage;
 		G4int ID_PVSensitiveGas_secondaryElectrons;
+		G4int ID_PVSensitiveGas_secondaryPositrons;
 		G4int ID_PVSensitiveGas_secondaryPhotons;
 };
 
