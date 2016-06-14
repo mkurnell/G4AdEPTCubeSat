@@ -1,5 +1,5 @@
 #########################
-# Set of the verboses 
+# Set the verbosity
 #
 /control/verbose 0
 /tracking/verbose 0
@@ -21,7 +21,6 @@
 # Use a control loop to execute a macro file more than once for
 # different particle energies
 #
-
 /control/loop runGamma_ISO.mac Ekin 100. 900. 100.
 /control/loop runGamma_ISO.mac Ekin 1000. 9000. 1000.
 /control/loop runGamma_ISO.mac Ekin 10000. 90000. 10000.

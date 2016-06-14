@@ -33,6 +33,4 @@ void ActionInitialization::Build() const
 	RunAction* runAction = new RunAction(fDetector,primary);
 	SetUserAction(runAction);
 
-}  
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+}

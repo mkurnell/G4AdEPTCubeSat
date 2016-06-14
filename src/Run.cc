@@ -20,7 +20,6 @@ Run::Run():G4Run()
 	ID_PVSensitiveGas_eDep_Electron = SDMan->GetCollectionID("PVSensitiveGas/eDepE");
 	ID_PVSensitiveGas_trackLengthPassage = SDMan->GetCollectionID("PVSensitiveGas/trackLengthPassage");
 	ID_PVSensitiveGas_secondaryElectrons = SDMan->GetCollectionID("PVSensitiveGas/secondaryElectrons");
-	ID_PVSensitiveGas_secondaryPositrons = SDMan->GetCollectionID("PVSensitiveGas/secondaryPositrons");
 	ID_PVSensitiveGas_secondaryPhotons = SDMan->GetCollectionID("PVSensitiveGas/secondaryPhotons");
 	ID_PVSensitiveGas_secondaryPositrons = SDMan->GetCollectionID("PVSensitiveGas/secondaryPositrons");
 		
