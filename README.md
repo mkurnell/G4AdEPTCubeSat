@@ -28,6 +28,6 @@ You may also choose to run a macro file at this point (e.g. cmake -DGeant4_DIR=/
 
 ## Scoring of Events
 
-This code will track the energy deposited in the Sensitive Gas Volume (SGV) by electrons, positrons and the sum of these two energies. In addition, it will also count the number of secondary electrons and photons created by these energy deposition events in the SGV. With the number of secondaries created tracked you will be able to determine how the photons interacted within the gas volume (Photoelectric Effect, Compton Scattering or Pair Production).
+This simulation will track the energy deposited in the Sensitive Gas Volume (SGV) by electrons, positrons and the sum of these two energies. In addition, it will also count the number of secondary electrons, positrons and photons created by these energy deposition events in the SGV. With the number of secondaries created tracked you will be able to determine how the photons interacted within the gas volume (Photoelectric Effect, Compton Scattering or Pair Production).
 
 All of this information will be printed out in the build directory in the form of CSV files.
