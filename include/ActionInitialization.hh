@@ -22,5 +22,3 @@ class ActionInitialization : public G4VUserActionInitialization
 };
 
 #endif
-
-    

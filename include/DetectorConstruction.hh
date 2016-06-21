@@ -142,10 +142,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	  G4double rotX;
     G4ProductionCuts*  fTrackerCuts;
     
-
 };
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 #endif
-

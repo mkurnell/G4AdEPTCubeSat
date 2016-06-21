@@ -1,16 +1,11 @@
 #########################
-# Set of the verboses 
+# Set the verbosity 
 #
 /control/verbose 0
 /tracking/verbose 0
 /event/verbose 0
 /run/verbose 0
 /vis/verbose 0
-
-#########################
-# Set detector parameters
-#
-#/CNPTEPC/DetectorAngle 0.0 deg
 
 ##########################
 # Multi-threading mode
@@ -26,4 +21,9 @@
 # Use a control loop to execute a macro file more than once for
 # different particle energies
 #
-/control/loop runElectron_ISO.mac Ekin 2000. 10000. 1000.
+/control/loop runElectron_ISO.mac Ekin 100. 900. 100.
+
+/control/loop runProton_ISO.mac Ekin 100. 900. 100.
+/control/loop runProton_ISO.mac Ekin 1000. 9000. 1000.
+/control/loop runProton_ISO.mac Ekin 10000. 90000. 10000.
+/control/loop runProton_ISO.mac Ekin 100000. 500000. 100000.

@@ -29,4 +29,4 @@
 /gps/particle gamma
 /gps/ene/type Mono
 /gps/ene/mono 100 MeV
-/run/beamOn 1000
+/run/beamOn 100

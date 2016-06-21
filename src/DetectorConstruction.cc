@@ -56,7 +56,8 @@
 #include "G4PSPassageTrackLength.hh"
 #include "G4PSPassageCellCurrent.hh"
 #include "G4PSNofSecondary.hh"
-
+#include "G4VSDFilter.hh"
+#include "G4SDParticleFilter.hh"
 #include "G4ProductionCuts.hh"
 
 
@@ -176,6 +177,7 @@ void DetectorConstruction::DefineMaterials()
   	G4Element* elC = nistManager->FindOrBuildElement(6);
   	G4Element* elO = nistManager->FindOrBuildElement(8);
   	G4Element* elSi = nistManager->FindOrBuildElement(14);
+	G4Element* elS = nistManager->FindOrBuildElement(16);
 
   	// NIST materials
   	G4Material* galactic = nistManager->FindOrBuildMaterial("G4_Galactic");
@@ -193,10 +195,42 @@ void DetectorConstruction::DefineMaterials()
 	// Detector Gas
 	G4Material* Ar_293K_1p5atm = nistManager->ConstructNewGasMaterial("Ar_293K_1p5atm","G4_Ar",293.15*kelvin,1.5*atmosphere);
 	
+	// *** Trial
+	G4double fractionmass, pressure, temperature;
+    G4int ncomponents, natoms;
+	G4Element* elAr = nistManager->FindOrBuildElement(18);
+	// CS2, STP 
+    density = 1.26*g/cm3;
+    G4Material* CS2 = new G4Material("CS2", density, ncomponents=2, kStateGas,273.15*kelvin,1.0*atmosphere);
+    CS2->AddElement(elC,1);
+    CS2->AddElement(elS,2);
+    	
+	// 95% Ar + 5% CS2 Gas at 1.5 atm 
+    density = 0.002795*g/cm3;
+    pressure = 1.5*atmosphere;
+    temperature = 293.15*kelvin;
+    G4Material* Ar_95_CS2_5 = new G4Material("Ar_95_CS2_5", density, ncomponents=2,kStateGas,temperature,pressure);
+    Ar_95_CS2_5->AddElement(elAr, fractionmass = 0.909);
+    Ar_95_CS2_5->AddMaterial(CS2, fractionmass = 0.091);
+    // *** End Trial 
+	
+		// For Neutron monitoring, change fMatGas to what follows
+	G4Isotope* he3 = new G4Isotope("he3", 2, 3, 3.016*g/mole );
+	G4Element* He3 = new G4Element("He3", "He3", 1);
+	He3->AddIsotope(he3, 100.*perCent);
+	G4Material* He3Gas = new G4Material("He3Gas",
+					    (3.016*1.5*101325./(2.08*293.15)),	
+					    1,
+					    kStateGas,
+					    293.15*kelvin,
+					    1.5*atmosphere);
+	He3Gas->AddElement(He3, 100.*perCent);
+		//
+		
   	// Set the materials for the Geometry
   	fMatWorld = galactic;
   	fMatPressureVessel = Al;
-  	fMatGas = Ar_293K_1p5atm;
+  	fMatGas = Ar_95_CS2_5;//Ar_293K_1p5atm;//He3Gas;//
 	fMatPCB = G10;
 	fMatMWD = Si; 
   	
@@ -209,12 +243,6 @@ void DetectorConstruction::DefineMaterials()
 
 G4VPhysicalVolume* DetectorConstruction::Construct()
 { 	
-	// Cleanup
-	// G4GeometryManager::GetInstance()->OpenGeometry();	
-  	// if(fRegGasDet) { delete fRegGasDet; }
-  	// fRegGasDet = new G4Region("Region_Sensitive_Gas");
-  	// fRegGasDet->SetProductionCuts(fTrackerCuts);
-	
 	// Cleanup old geometry
   	G4GeometryManager::GetInstance()->OpenGeometry();
   	G4PhysicalVolumeStore::GetInstance()->Clean();
@@ -575,16 +603,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   	G4VisAttributes* Vis_PV = new G4VisAttributes(G4Colour(1.,1.,1.,0.2));
   	Vis_PV->SetForceWireframe(false);
   	PVLogical->SetVisAttributes(Vis_PV);
-	  
-  	// ** Pressure Vessel Cutouts
-  	// G4VisAttributes* Vis_Cutout = new G4VisAttributes(G4Colour(0.,0.,0.,0.2));
-  	// Vis_Cutout->SetForceWireframe(false);
-  	// PVSideCutLogical_1->SetVisAttributes(Vis_Cutout);
-	// PVSideCutLogical_2->SetVisAttributes(Vis_Cutout);
-	// PVSideCutLogical_3->SetVisAttributes(Vis_Cutout);
-	// PVSideCutLogical_4->SetVisAttributes(Vis_Cutout);
-  	// PVTopCutLogical->SetVisAttributes(Vis_Cutout);
-	// PVBottomCutLogical->SetVisAttributes(Vis_Cutout);
   	
   	// ** Pressure Vessel Gas Volume
   	G4VisAttributes* Vis_Gas = new G4VisAttributes(G4Colour(0.,0.,1.,0.3));
@@ -629,15 +647,55 @@ void DetectorConstruction::ConstructSDandField()
 	G4SDManager::GetSDMpointer()->AddNewDetector(PVGasScorer);	
 	G4SDManager::GetSDMpointer()->SetVerboseLevel(0);
 	PVSensitiveGasLogical->SetSensitiveDetector(PVGasScorer);
- 	
- 	G4PSEnergyDeposit* eDep_Gas = new G4PSEnergyDeposit("eDep");
+	
+	// MFD Filters
+	G4VSDFilter* ElectronFilter = new G4SDParticleFilter("electronFilter","e-");
+	G4VSDFilter* PositronFilter = new G4SDParticleFilter("positronFilter","e+");
+	G4VSDFilter* PhotonFilter = new G4SDParticleFilter("gammaFilter","gamma");
+	G4VSDFilter* tritonFilter = new G4SDParticleFilter("tritonFilter","triton");
+	
+	// Total Energy deposited in the Sensitive Gas Volume
+	G4VPrimitiveScorer* eDep_Gas = new G4PSEnergyDeposit("eDep");
     PVGasScorer->RegisterPrimitive(eDep_Gas);
-    
+	
+	// Energy deposited from positrons in the Sensitive Gas Volume;
+	G4VPrimitiveScorer* eDep_Gas_Positron = new G4PSEnergyDeposit("eDepP");
+	eDep_Gas_Positron->SetFilter(PositronFilter);
+    PVGasScorer->RegisterPrimitive(eDep_Gas_Positron);
+	
+	// Energy deposited from Electrons in the Sensitive Gas Volume
+	G4VPrimitiveScorer* eDep_Gas_Electron = new G4PSEnergyDeposit("eDepE");
+	eDep_Gas_Electron->SetFilter(ElectronFilter);
+	PVGasScorer->RegisterPrimitive(eDep_Gas_Electron);
+	
+	// Energy deposited from Tritons in the Sensitive Gas Volume
+	G4VPrimitiveScorer* eDep_Gas_Triton = new G4PSEnergyDeposit("eDepT");
+	eDep_Gas_Triton->SetFilter(tritonFilter);
+	PVGasScorer->RegisterPrimitive(eDep_Gas_Triton);
+	
+	// Track length in the Sensitive Gas Volume
     G4PSPassageTrackLength* trackLengthPassage_Gas = new G4PSPassageTrackLength("trackLengthPassage");
  	PVGasScorer->RegisterPrimitive(trackLengthPassage_Gas);
 	 
-	G4PSNofSecondary* ionizations_Gas = new G4PSNofSecondary("ionizations");
-	PVGasScorer->RegisterPrimitive(ionizations_Gas);
+	// Number of secondary electrons
+	G4PSNofSecondary* secondaryElectrons = new G4PSNofSecondary("secondaryElectrons");
+	secondaryElectrons->SetFilter(ElectronFilter);
+	PVGasScorer->RegisterPrimitive(secondaryElectrons);
+	
+	// Number of secondary positrons
+	G4PSNofSecondary* secondaryPositrons = new G4PSNofSecondary("secondaryPositrons");
+	secondaryPositrons->SetFilter(PositronFilter);
+	PVGasScorer->RegisterPrimitive(secondaryPositrons);
+	
+	// Number of secondary photons
+	G4PSNofSecondary* secondaryPhotons = new G4PSNofSecondary("secondaryPhotons");
+	secondaryPhotons->SetFilter(PhotonFilter);
+	PVGasScorer->RegisterPrimitive(secondaryPhotons);
+	
+	// Number of secondary tritons
+	G4PSNofSecondary* secondaryTritons = new G4PSNofSecondary("secondaryTritons");
+	secondaryTritons->SetFilter(tritonFilter);
+	PVGasScorer->RegisterPrimitive(secondaryTritons);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

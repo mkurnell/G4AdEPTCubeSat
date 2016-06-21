@@ -1,35 +1,33 @@
-##########################
 # Set name for the output file
-#
-/analysis/setFileName e-_{Ekin}keV_ISO          
+/analysis/setFileName e-_{Ekin}keV_Nr_1000000000_ISO        
 
-##########################
-# Initialisation procedure
-#
+# Initialize the run
 /run/initialize
+
+# Set Cuts
+/run/setCut  205 um					# Properly adjusted for Argon at NTP
+/run/particle/dumpCutValues
+
+# Verbosity
+/tracking/verbose 0
 
 ##########################################################################################
 # Model the particle source along the surface of a sphere surrounding the detector
+##########################################################################################
 
 /gps/pos/type Surface
 /gps/pos/shape Sphere
-/gps/pos/centre 0. 0. 0. cm
-/gps/pos/radius 7.75 cm
+/gps/pos/centre 0. 0. 0. mm
+/gps/pos/radius 100. mm
 
-##########################################################################################
 # Use the cosine angular distribution
 /gps/ang/type cos
 /gps/ang/mintheta    0.000E+00 deg
 /gps/ang/maxtheta    9.000E+01 deg
+#/gps/source/list
 
-#########################
-# Set particle type, energy, and distribution
-#
+# Energy & Particle Type
 /gps/particle e-
 /gps/ene/type Mono
 /gps/ene/mono {Ekin} keV
-
-#########################
-# Run particles
-#
-/run/beamOn 10000
+/run/beamOn 1000000000
