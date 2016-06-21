@@ -22,6 +22,8 @@
 # different particle energies
 #
 /control/loop runElectron_ISO.mac Ekin 100. 900. 100.
-/control/loop runElectron_ISO.mac Ekin 1000. 9000. 1000.
-/control/loop runElectron_ISO.mac Ekin 10000. 90000. 10000.
-/control/loop runElectron_ISO.mac Ekin 100000. 900000. 100000.
+
+/control/loop runProton_ISO.mac Ekin 100. 900. 100.
+/control/loop runProton_ISO.mac Ekin 1000. 9000. 1000.
+/control/loop runProton_ISO.mac Ekin 10000. 90000. 10000.
+/control/loop runProton_ISO.mac Ekin 100000. 500000. 100000.

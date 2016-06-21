@@ -1,5 +1,5 @@
 # Set name for the output file
-/analysis/setFileName gamma_{Ekin}keV_Nr_100000000_ISO        
+/analysis/setFileName e-_{Ekin}keV_Nr_1000000000_ISO        
 
 # Initialize the run
 /run/initialize
@@ -30,4 +30,4 @@
 /gps/particle e-
 /gps/ene/type Mono
 /gps/ene/mono {Ekin} keV
-/run/beamOn 10000000
+/run/beamOn 1000000000

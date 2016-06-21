@@ -49,6 +49,10 @@ set(AdEPTCubeSat_SCRIPTS
   runGamma.mac
   runGamma_ISO.mac
   runGammas_ISO.mac
+  runNeutron_ISO.mac
+  runNeutrons_ISO.mac
+  runProton_ISO.mac
+  runProtons_ISO.mac
   #run_GCR_H.mac
   #run_GCR_Fe.mac
   #runNeutron.mac

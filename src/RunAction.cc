@@ -44,10 +44,12 @@ detector(det), particleGun(primary)
 	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas");
  	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas_Positron");
 	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas_Electron");
+	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas_Triton");
  	analysisManager->CreateNtupleDColumn("trackLength_PVSensitiveGas");
 	analysisManager->CreateNtupleDColumn("Secondary Electrons");
 	analysisManager->CreateNtupleDColumn("Secondary Photons");
 	analysisManager->CreateNtupleDColumn("Secondary Positrons");
+	analysisManager->CreateNtupleDColumn("Secondary Tritons");
  	analysisManager->FinishNtuple();
 }
 
@@ -99,7 +101,7 @@ void RunAction::BeginOfRunAction(const G4Run* aRun)
   	
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+// //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void RunAction::EndOfRunAction(const G4Run* aRun)
 { 	
