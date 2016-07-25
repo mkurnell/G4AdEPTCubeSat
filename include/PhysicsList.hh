@@ -34,7 +34,6 @@ private:
   	G4VPhysicsConstructor*  fDecayPhysicsList;
   	std::vector<G4VPhysicsConstructor*> fHadronPhys;
   	G4String fEmName;
-
 };
 
 #endif

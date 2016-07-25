@@ -20,9 +20,13 @@
 ##########################
 # Use a control loop to execute a macro file more than once for
 # different particle energies
-#
+
+#/control/loop runNeutron_ISO.mac Ekin 0.0001 0.0009 0.0001
+#/control/loop runNeutron_ISO.mac Ekin 10. 90. 10.
 #/control/loop runNeutron_ISO.mac Ekin 100. 900. 100.
-#/control/loop runNeutron_ISO.mac Ekin 1000. 9000. 1000.
-#/control/loop runNeutron_ISO.mac Ekin 10000. 90000. 10000.
-#/control/loop runNeutron_ISO.mac Ekin 100000. 900000. 100000.
-/control/execute runNeutron_ISO.mac Ekin 1000000.
+#/control/loop runNeutron_ISO.mac Ekin 1000. 5000. 1000.
+/control/loop runNeutron_ISO.mac Ekin 11000. 19000. 1000.
+#/control/loop runNeutron_ISO.mac Ekin 70000. 70000. 10000.
+
+# completed 10 - 90000 for FTFP_BERT_HP()
+# Need 11000-19000 for FTFP_BERT_HP, 100000000 neutrons

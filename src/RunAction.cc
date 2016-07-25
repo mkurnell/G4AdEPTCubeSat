@@ -45,11 +45,13 @@ detector(det), particleGun(primary)
  	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas_Positron");
 	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas_Electron");
 	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas_Triton");
+	analysisManager->CreateNtupleDColumn("eDep_PVSensitiveGas_Proton");
  	analysisManager->CreateNtupleDColumn("trackLength_PVSensitiveGas");
 	analysisManager->CreateNtupleDColumn("Secondary Electrons");
 	analysisManager->CreateNtupleDColumn("Secondary Photons");
 	analysisManager->CreateNtupleDColumn("Secondary Positrons");
 	analysisManager->CreateNtupleDColumn("Secondary Tritons");
+	analysisManager->CreateNtupleDColumn("Secondary Protons");
  	analysisManager->FinishNtuple();
 }
 

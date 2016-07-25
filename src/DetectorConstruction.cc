@@ -5,7 +5,7 @@
 //				Includes the detector's pressure vessel (PV), Ar+CS2 gas
 //				volume, various PCBs and the AdEPT Micro Well Detector (MWD)
 //
-// Created: Mitchell D. Kurnell
+// Created by: Mitchell D. Kurnell
 // 
 // ********************************************************************
 
@@ -195,9 +195,17 @@ void DetectorConstruction::DefineMaterials()
 	// Detector Gas
 	G4Material* Ar_293K_1p5atm = nistManager->ConstructNewGasMaterial("Ar_293K_1p5atm","G4_Ar",293.15*kelvin,1.5*atmosphere);
 	
-	// *** Trial
+	// Trial Gas
+	density = 0.002795*g/cm3;
+	G4Element* elB = nistManager->FindOrBuildElement(5);
+	G4Element* elF = nistManager->FindOrBuildElement(9);
+	G4int ncomponents, natoms;
+	G4Material* BoronGas = new G4Material("BoronGas", density, ncomponents=2, kStateGas, 293.15*kelvin, 1.5*atmosphere);
+	BoronGas->AddElement(elB, 1);
+	BoronGas->AddElement(elF, 3);
+	
 	G4double fractionmass, pressure, temperature;
-    G4int ncomponents, natoms;
+    // G4int ncomponents, natoms;
 	G4Element* elAr = nistManager->FindOrBuildElement(18);
 	// CS2, STP 
     density = 1.26*g/cm3;
@@ -207,30 +215,35 @@ void DetectorConstruction::DefineMaterials()
     	
 	// 95% Ar + 5% CS2 Gas at 1.5 atm 
     density = 0.002795*g/cm3;
-    pressure = 1.5*atmosphere;
+    pressure = 1.5*atmosphere;//3.0*atmosphere;//
     temperature = 293.15*kelvin;
     G4Material* Ar_95_CS2_5 = new G4Material("Ar_95_CS2_5", density, ncomponents=2,kStateGas,temperature,pressure);
     Ar_95_CS2_5->AddElement(elAr, fractionmass = 0.909);
     Ar_95_CS2_5->AddMaterial(CS2, fractionmass = 0.091);
-    // *** End Trial 
+	//
+		
+	// Helium3 Gas - Used for Neutron Capture detector
 	
-		// For Neutron monitoring, change fMatGas to what follows
-	G4Isotope* he3 = new G4Isotope("he3", 2, 3, 3.016*g/mole );
-	G4Element* He3 = new G4Element("He3", "He3", 1);
-	He3->AddIsotope(he3, 100.*perCent);
-	G4Material* He3Gas = new G4Material("He3Gas",
-					    (3.016*1.5*101325./(2.08*293.15)),	
-					    1,
-					    kStateGas,
-					    293.15*kelvin,
-					    1.5*atmosphere);
-	He3Gas->AddElement(He3, 100.*perCent);
-		//
+	 G4int prot=2, neut=1, nucleons=prot+neut;
+     G4double atomicMass = 3.016*g/mole;
+     G4Isotope* he3 = new G4Isotope("He3", prot, nucleons, atomicMass);
+
+     G4Element* He3 = new G4Element("Helium3", "He3", 1);
+     He3->AddIsotope(he3, 100*perCent);
+
+     G4double press = 1.5*atmosphere;
+     G4double temper = 293.15*kelvin;
+     G4double molar_constant = Avogadro*k_Boltzmann;  //from clhep 8.314462145
+     G4double dens = (atomicMass*press)/(temper*molar_constant);
+     G4Material* Helium3 = new G4Material("Helium3", dens, 1, kStateGas, temper, press);
+     Helium3->AddElement(He3, 100*perCent); 
+
+	 //
 		
   	// Set the materials for the Geometry
   	fMatWorld = galactic;
   	fMatPressureVessel = Al;
-  	fMatGas = Ar_95_CS2_5;//Ar_293K_1p5atm;//He3Gas;//
+  	fMatGas = Helium3;//Ar_95_CS2_5;//Ar_293K_1p5atm;//BoronGas;//
 	fMatPCB = G10;
 	fMatMWD = Si; 
   	
@@ -653,6 +666,7 @@ void DetectorConstruction::ConstructSDandField()
 	G4VSDFilter* PositronFilter = new G4SDParticleFilter("positronFilter","e+");
 	G4VSDFilter* PhotonFilter = new G4SDParticleFilter("gammaFilter","gamma");
 	G4VSDFilter* tritonFilter = new G4SDParticleFilter("tritonFilter","triton");
+	G4VSDFilter* protonFilter = new G4SDParticleFilter("protonFilter","proton");
 	
 	// Total Energy deposited in the Sensitive Gas Volume
 	G4VPrimitiveScorer* eDep_Gas = new G4PSEnergyDeposit("eDep");
@@ -672,6 +686,11 @@ void DetectorConstruction::ConstructSDandField()
 	G4VPrimitiveScorer* eDep_Gas_Triton = new G4PSEnergyDeposit("eDepT");
 	eDep_Gas_Triton->SetFilter(tritonFilter);
 	PVGasScorer->RegisterPrimitive(eDep_Gas_Triton);
+	
+	// Energy deposited from Protons in the Sensitive Gas Volume
+	G4VPrimitiveScorer* eDep_Gas_Proton = new G4PSEnergyDeposit("eDepPro");
+	eDep_Gas_Proton->SetFilter(protonFilter);
+	PVGasScorer->RegisterPrimitive(eDep_Gas_Proton);
 	
 	// Track length in the Sensitive Gas Volume
     G4PSPassageTrackLength* trackLengthPassage_Gas = new G4PSPassageTrackLength("trackLengthPassage");
@@ -696,6 +715,11 @@ void DetectorConstruction::ConstructSDandField()
 	G4PSNofSecondary* secondaryTritons = new G4PSNofSecondary("secondaryTritons");
 	secondaryTritons->SetFilter(tritonFilter);
 	PVGasScorer->RegisterPrimitive(secondaryTritons);
+
+	// Number of secondary protons
+	G4PSNofSecondary* secondaryProtons = new G4PSNofSecondary("secondaryProtons");
+	secondaryProtons->SetFilter(protonFilter);
+	PVGasScorer->RegisterPrimitive(secondaryProtons);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

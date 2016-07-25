@@ -17,11 +17,16 @@
 
 #include "G4HadronPhysicsQGSP_BIC_HP.hh"
 #include "G4HadronPhysicsQGSP_BERT_HP.hh"
+#include "G4HadronPhysicsQGSP_BIC_AllHP.hh"
+#include "G4HadronPhysicsFTFP_BERT_HP.hh"
 
 #include "G4Gamma.hh"
 #include "G4Electron.hh"
 #include "G4Positron.hh"
 #include "G4Proton.hh"
+//
+#include "G4Triton.hh"
+//
 
 #include "G4UnitsTable.hh"
 #include "G4SystemOfUnits.hh"
@@ -33,6 +38,22 @@
 #include "G4ProcessManager.hh"
 #include "G4ParticleTypes.hh"
 #include "G4ParticleTable.hh"
+
+// TRIAL
+#include "G4NeutronHPCapture.hh"
+#include "G4BinaryCascade.hh"
+// #include "G4NeutronHPData.hh"
+
+#include "G4NeutronHPCaptureData.hh"
+#include "G4NeutronHPElastic.hh"
+#include "G4NeutronHPElasticData.hh"
+#include "G4NeutronHPInelastic.hh"
+#include "G4NeutronHPInelasticData.hh"
+#include "G4LFission.hh"
+#include "G4ParticleHPThermalScatteringData.hh"
+#include "G4ParticleHPThermalScattering.hh"
+#include "G4ProcessTable.hh"
+// END TRIAL
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -61,6 +82,8 @@ PhysicsList::PhysicsList() : G4VModularPhysicsList(),
 	// Hadron Physics
   	// fHadronPhys.push_back( new G4HadronPhysicsQGSP_BERT_HP());
   	fHadronPhys.push_back( new G4HadronPhysicsQGSP_BIC_HP());
+	// fHadronPhys.push_back( new G4HadronPhysicsFTFP_BERT_HP());
+	// fHadronPhys.push_back( new G4HadronPhysicsQGSP_BIC_AllHP());
 
 }
 
@@ -97,7 +120,7 @@ void PhysicsList::ConstructProcess()
 	// Hadronic Physics
 	for(size_t i=0; i<fHadronPhys.size(); ++i) { 
     	fHadronPhys[i]->ConstructProcess(); 
-  	}
+  	}	
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
