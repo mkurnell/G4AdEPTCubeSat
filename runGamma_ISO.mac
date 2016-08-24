@@ -1,5 +1,5 @@
 # Set the output file name
-/analysis/setFileName gamma_{Ekin}keV_Nr_1000000000_ISO_trial 
+/analysis/setFileName gamma_{Ekin}keV_Nr_1000000000_ISO_4U
 
 # Initialize the run
 /run/initialize
@@ -18,7 +18,7 @@
 /gps/pos/type Surface
 /gps/pos/shape Sphere
 /gps/pos/centre 0. 0. 0. mm
-/gps/pos/radius 100. mm
+/gps/pos/radius 170. mm
 
 # Use the cosine angular distribution
 /gps/ang/type cos
@@ -30,4 +30,4 @@
 /gps/particle gamma
 /gps/ene/type Mono
 /gps/ene/mono {Ekin} keV
-/run/beamOn 100000000
+/run/beamOn 1000000000

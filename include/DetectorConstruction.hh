@@ -94,6 +94,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     G4double PV_sidecut_width;
     G4double PV_sidecut_depth;
     
+    G4double PV_short_sidecut_length;
+    G4double PV_short_sidecut_width;
+    
     G4double PV_topcut_length;
     G4double PV_topcut_width;
     G4double PV_topcut_depth;

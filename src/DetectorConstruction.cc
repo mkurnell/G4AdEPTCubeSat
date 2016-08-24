@@ -68,67 +68,71 @@ WorldPhysical(0)
 {	
 	// Geometry Parameters (Default)
 	// Pressure Vessel Top
-	PV_length = 100.*mm;
+	PV_length = 214.6*mm;
 	PV_width = 100.*mm;
-	PV_height = 109.*mm;
+	PV_height = 214.6*mm;
 	
 	// Pressure Vessel Top Side Cutouts
-	PV_sidecut_length = 83.*mm;
-	PV_sidecut_width = 83.*mm;
+	PV_sidecut_length = 197.6*mm;
+	PV_sidecut_width = 197.6*mm;
 	PV_sidecut_depth = 5.5*mm;
 	
+	// Short Side Pressure Vessel Top SideCutouts
+	PV_short_sidecut_length = 83.*mm;
+	PV_short_sidecut_width = 197.6*mm;
+	
 	// Pressure Vessel Top Cap Cutouts
-	PV_topcut_length = 83.*mm;
-	PV_topcut_width = 83.*mm;
-	PV_topcut_depth = 1.*mm;
+	PV_topcut_length = 197.6*mm;
+	PV_topcut_width = 197.6*mm;
+	PV_topcut_depth = 0.2*mm;
 	
 	// Pressure Vessel Bottom
-	PV_bottom_length = 83.*mm;
+	PV_bottom_length = 197.6*mm;
 	PV_bottom_width = 83.*mm;
 	PV_bottom_height = 12.1*mm;
 	
 	// Pressure Vessel Bottom Cutouts
-	PV_bottom_cut_length = 66.*mm;
+	PV_bottom_cut_length = 180.6*mm;
 	PV_bottom_cut_width = 66.*mm;
 	PV_bottom_cut_depth = 1.*mm;
 	
 	// Pressure Vessel Top Gas Volume
-	PV_gas_length = 85.*mm;
+	PV_gas_length = 199.5*mm;
 	PV_gas_width = 85.*mm;
-	PV_gas_height = 103.5*mm;
+	PV_gas_height = 207.1*mm;
 	
 	// Pressure Vessel Intermediate Gas Volume
-	PV_mid_gas_length = 73.*mm;
-	PV_mid_gas_width = 73*mm;
+	PV_mid_gas_length = 187.6*mm;
+	PV_mid_gas_width = 73.*mm;
 	PV_mid_gas_height = 2.5*mm;
 	
 	// Pressure Vessel Bottom Gas Volume
-	PV_bottom_gas_length = 73.*mm;
+	PV_bottom_gas_length = 187.6*mm;
 	PV_bottom_gas_width = 73.*mm;
 	PV_bottom_gas_height = 11.6*mm;
 	
 	// Presure Vessel Sensitive Gas Volume
-	PV_sensitive_gas_length = 78.5*mm;
+	PV_sensitive_gas_length = 193.*mm;
 	PV_sensitive_gas_width = 78.5*mm;
-	PV_sensitive_gas_height = 95.*mm;
+	PV_sensitive_gas_height = 199.5*mm;
 	
 	// Inner Electric Field Cage
-	Cage_length = 85.*mm;
+	Cage_length = 199.5*mm;
 	Cage_width = 85.*mm;
-	Cage_height = 95.*mm;
+	Cage_height = 199.5*mm;
 	
 	// Pressure Vessel Top PCBs
-	Top_PCB_length = 85.*mm;
+	Top_PCB_length = 199.5*mm;
 	Top_PCB_width = 85.*mm;
 	Top_PCB_thickness = 1.6*mm;
 	
 	// Bottom PCB
-	Bottom_PCB_length = 73.*mm;
+	Bottom_PCB_length = 187.6*mm;
 	Bottom_PCB_width = 73.*mm;
 	Bottom_PCB_thickness = 1.6*mm;
 	
 	// Micro-Well Detector
-	MWD_length = 77.5*mm;
+	MWD_length = 192.*mm;
 	MWD_width = 77.5*mm;
 	MWD_thickness = 1.*mm;
 			
@@ -243,7 +247,7 @@ void DetectorConstruction::DefineMaterials()
   	// Set the materials for the Geometry
   	fMatWorld = galactic;
   	fMatPressureVessel = Al;
-  	fMatGas = Helium3;//Ar_95_CS2_5;//Ar_293K_1p5atm;//BoronGas;//
+  	fMatGas = Ar_95_CS2_5;//Ar_293K_1p5atm;//BoronGas;//Helium3;//
 	fMatPCB = G10;
 	fMatMWD = Si; 
   	
@@ -299,128 +303,23 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	////////////////////////////////////////////////////////////////////////
 	// Pressure Vessel Side Cutouts
 	
-	G4Box* PVSideCut = new G4Box("PressureVesselSideCut", PV_sidecut_depth/2, PV_sidecut_length/2, PV_sidecut_width/2);
-	
-	// PVSideCutLogical_1 = 
-	// 	new G4LogicalVolume(PVSideCut_1,
-	// 						fMatWorld,
-	// 						"PressureVesselSideCut");
-	
-	// PVSideCutPhysical_1 = 
-	// 	new G4PVPlacement(	0,
-	// 						G4ThreeVector((PV_width-PV_sidecut_depth)/2,0,0),
-	// 						PVSideCutLogical_1,
-	// 						"PressureVesselSideCut",
-	// 						WorldLogical,
-	// 						false,
-	// 						0,
-	// 						fCheckOverlaps);
-	
-	// //////////						
-							
-	// G4Box* PVSideCut_2 = new G4Box("PressureVesselSideCut", PV_sidecut_depth/2, PV_sidecut_length/2, PV_sidecut_width/2);
-	
-	// PVSideCutLogical_2 = 
-	// 	new G4LogicalVolume(PVSideCut_2,
-	// 						fMatWorld,
-	// 						"PressureVesselSideCut");
-	
-	// PVSideCutPhysical_2 = 
-	// 	new G4PVPlacement(	0,
-	// 						G4ThreeVector(-(PV_width-PV_sidecut_depth)/2,0,0),
-	// 						PVSideCutLogical_2,
-	// 						"PressureVesselSideCut",
-	// 						WorldLogical,
-	// 						false,
-	// 						0,
-	// 						fCheckOverlaps);
-							
-	// //////////		
+	G4Box* PVSideCut = new G4Box("PressureVesselSideCut", PV_sidecut_depth/2, PV_short_sidecut_length/2, PV_short_sidecut_width/2);
 							
 	G4Box* PVSideCut_3 = new G4Box("PressureVesselSideCut", PV_sidecut_length/2, PV_sidecut_depth/2, PV_sidecut_width/2);
 	
-	// PVSideCutLogical_3 = 
-	// 	new G4LogicalVolume(PVSideCut_3,
-	// 						fMatWorld,
-	// 						"PressureVesselSideCut");
-	
-	// PVSideCutPhysical_3 = 
-	// 	new G4PVPlacement(	0,
-	// 						G4ThreeVector(0,(PV_width-PV_sidecut_depth)/2,0),
-	// 						PVSideCutLogical_3,
-	// 						"PressureVesselSideCut",
-	// 						WorldLogical,
-	// 						false,
-	// 						0,
-	// 						fCheckOverlaps);
-							
-	// //////////		
-
-	// G4Box* PVSideCut_4 = new G4Box("PressureVesselSideCut", PV_sidecut_length/2, PV_sidecut_depth/2, PV_sidecut_width/2);
-	
-	// PVSideCutLogical_4 = 
-	// 	new G4LogicalVolume(PVSideCut_4,
-	// 						fMatWorld,
-	// 						"PressureVesselSideCut");
-	
-	// PVSideCutPhysical_4 = 
-	// 	new G4PVPlacement(	0,
-	// 						G4ThreeVector(0,-(PV_width-PV_sidecut_depth)/2,0),
-	// 						PVSideCutLogical_4,
-	// 						"PressureVesselSideCut",
-	// 						WorldLogical,
-	// 						false,
-	// 						0,
-	// 						fCheckOverlaps);
-	
-	// ////////////////////////////////////////////////////////////////////////
-	// // Pressure Vessel Top Cutouts
+	////////////////////////////////////////////////////////////////////////
+	// Pressure Vessel Top Cutouts
 	
 	G4Box* PVTopCut = new G4Box("PressureVesselTopCut", PV_topcut_length/2, PV_topcut_width/2, PV_topcut_depth/2);
-	
-	// PVTopCutLogical = 
-	// 	new G4LogicalVolume(PVTopCut,
-	// 						fMatWorld,
-	// 						"PressureVesselTopCut");
-							
-	// PVTopCutPhysical = 
-	// 	new G4PVPlacement(	0,
-	// 						G4ThreeVector(0,0,-(PV_height-PV_topcut_depth)/2),
-	// 						PVTopCutLogical,
-	// 						"PressureVesselTopCut",
-	// 						WorldLogical,
-	// 						false,
-	// 						0,
-	// 						fCheckOverlaps);
-								
-	////////////////////////////////////////////////////////////////////////
-	// Pressure Vessel Bottom Cutouts
-
-	// G4Box* PVBottomCut = new G4Box("PressureVesselBottomCut", PV_bottom_cut_length/2, PV_bottom_cut_width/2, PV_bottom_cut_depth/2);
-	
-	// PVBottomCutLogical = 
-	// 	new G4LogicalVolume(PVBottomCut,
-	// 						fMatWorld,
-	// 						"PressureVesselBottomCut");
-							
-	// PVBottomCutPhysical =
-	// 	new G4PVPlacement(	0,
-	// 						G4ThreeVector(0,0,(PV_height+PV_bottom_height*2-PV_bottom_cut_depth*2)/2),
-	// 						PVBottomCutLogical,
-	// 						"PressureVesselBottomCut",
-	// 						WorldLogical,
-	// 						false,
-	// 						0,
-	// 						fCheckOverlaps);
 	
 	////////////////////////////////////////////////////////////////////////
 	// Subtraction of cutouts from Pressure Vessel
 	
 	G4SubtractionSolid* PVSolid_1 = 
-		new G4SubtractionSolid("PressureVesselSolid", PVSolidBody, PVSideCut, 0, G4ThreeVector((PV_width-PV_sidecut_depth)/2,0,0));
+		new G4SubtractionSolid("PressureVesselSolid", PVSolidBody, PVSideCut, 0, G4ThreeVector((PV_length-PV_sidecut_depth)/2,0,0));
 	
 	G4SubtractionSolid* PVSolid_2 = 
-		new G4SubtractionSolid("PressureVesselSolid", PVSolid_1, PVSideCut, 0, G4ThreeVector(-(PV_width-PV_sidecut_depth)/2,0,0));
+		new G4SubtractionSolid("PressureVesselSolid", PVSolid_1, PVSideCut, 0, G4ThreeVector(-(PV_length-PV_sidecut_depth)/2,0,0));
 	
 	G4SubtractionSolid* PVSolid_3 = 
 		new G4SubtractionSolid("PressureVesselSolid", PVSolid_2, PVSideCut_3, 0, G4ThreeVector(0,(PV_width-PV_sidecut_depth)/2,0));
@@ -454,7 +353,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	G4Box* PVGasBottom = new G4Box("PressureVesselGasBottom", PV_bottom_gas_length/2, PV_bottom_gas_width/2, PV_bottom_gas_height/2);
 	
 	G4UnionSolid* PVGasTemp = new G4UnionSolid("PressureVesselGasTemp", PVGasTop, PVGasMid, 0, G4ThreeVector(0,0,(PV_gas_height+PV_mid_gas_height)/2));
-	G4UnionSolid* PVGas = new G4UnionSolid("PressureVesselGas", PVGasTemp, PVGasBottom, 0, G4ThreeVector(0,0,(PV_mid_gas_height+PV_gas_height+PV_bottom_gas_height)/2));
+	G4UnionSolid* PVGas = new G4UnionSolid("PressureVesselGas", PVGasTemp, PVGasBottom, 0, G4ThreeVector(0,0,(2*PV_mid_gas_height+PV_gas_height+PV_bottom_gas_height)/2));
 	
 	PVGasLogical = 
 		new G4LogicalVolume(PVGas,
@@ -487,7 +386,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 							
 	PVSensitiveGasPhysical =
 		new G4PVPlacement(	0,
-							G4ThreeVector(0,0,-0.25),
+							G4ThreeVector(0,0,-0.5),
 							PVSensitiveGasLogical,
 							"SensitiveGas",
 							PVGasLogical,
@@ -511,7 +410,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	
 	TopPCBPhysical =
 		new G4PVPlacement(	0,
-							G4ThreeVector(0,0,-47.75-0.8),//(-PV_gas_height+8.*mm+Top_PCB_thickness)/2),
+							G4ThreeVector(0,0,(-PV_gas_height+5.*mm)/2),//-39.5-0.8),//(-PV_gas_height+8.*mm+Top_PCB_thickness)/2),
 							TopPCBLogical,
 							"TopPCB",
 							PVGasLogical,
@@ -531,7 +430,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	
 	BottomPCBPhysical =
 		new G4PVPlacement(	0,
-							G4ThreeVector(0,0,47.25+0.8),//(PV_gas_height-Top_PCB_thickness-9*mm)/2),
+							G4ThreeVector(0,0,(PV_gas_height-7.*mm)/2),//(PV_gas_height-Top_PCB_thickness-9*mm)/2),
 							BottomPCBLogical,
 							"BottomPCB",
 							PVGasLogical,
@@ -551,7 +450,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	
 	CapPCBPhysical = 
 		new G4PVPlacement(	0,
-							G4ThreeVector(0,0,((PV_gas_height-Bottom_PCB_thickness)/2+PV_bottom_gas_height+PV_mid_gas_height/2)),
+							G4ThreeVector(0,0,((PV_gas_height-Bottom_PCB_thickness)/2+PV_bottom_gas_height+PV_mid_gas_height)),
 							CapPCBLogical,
 							"CapPCB",
 							PVGasLogical,
@@ -595,7 +494,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 							
 	CagePhysical = 
 		new G4PVPlacement(	0,
-							G4ThreeVector(0,0,-0.25*mm),
+							G4ThreeVector(0,0,-0.5*mm),
 							CageLogical,
 							"Cage",
 							PVGasLogical,
@@ -639,7 +538,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   	Vis_MWD->SetForceWireframe(false);
   	MWDLogical->SetVisAttributes(Vis_MWD);
   	
-  	// // ** Field Shaping Cage
+  	// ** Field Shaping Cage
   	G4VisAttributes* Vis_Cage = new G4VisAttributes(G4Colour(0.8,0.52,0.25,0.4));
   	Vis_Cage->SetForceWireframe(false);
   	CageLogical->SetVisAttributes(Vis_Cage);

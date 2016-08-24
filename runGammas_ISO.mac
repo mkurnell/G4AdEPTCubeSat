@@ -22,9 +22,9 @@
 # different particle energies
 #
 #/control/loop runGamma_ISO.mac Ekin 10. 90. 10.
-/control/loop runGamma_ISO.mac Ekin 100. 900. 100.
+#/control/loop runGamma_ISO.mac Ekin 100. 900. 100.
 /control/loop runGamma_ISO.mac Ekin 1100. 1900. 100.
-/control/loop runGamma_ISO.mac Ekin 1000. 9000. 1000.
-/control/loop runGamma_ISO.mac Ekin 10000. 90000. 10000.
-/control/loop runGamma_ISO.mac Ekin 100000. 900000. 100000.
-#/control/loop runGamma_ISO.mac Ekin 1000000. 2000000. 1000000.
+#/control/loop runGamma_ISO.mac Ekin 1000. 9000. 1000.
+#/control/loop runGamma_ISO.mac Ekin 10000. 90000. 10000.
+#/control/loop runGamma_ISO.mac Ekin 100000. 900000. 100000.
+#/control/loop runGamma_ISO.mac Ekin 1000000. 1000000. 1000000.

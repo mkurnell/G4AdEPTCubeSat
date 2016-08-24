@@ -1,5 +1,5 @@
 # Set name for the output file
-/analysis/setFileName e-_{Ekin}keV_Nr_100000000_ISO        
+/analysis/setFileName e-_{Ekin}keV_Nr_100000000_ISO_4U        
 
 # Initialize the run
 /run/initialize
@@ -18,7 +18,7 @@
 /gps/pos/type Surface
 /gps/pos/shape Sphere
 /gps/pos/centre 0. 0. 0. mm
-/gps/pos/radius 100. mm
+/gps/pos/radius 170. mm
 
 # Use the cosine angular distribution
 /gps/ang/type cos

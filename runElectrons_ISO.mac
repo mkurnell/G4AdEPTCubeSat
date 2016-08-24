@@ -21,5 +21,5 @@
 # Use a control loop to execute a macro file more than once for
 # different particle energies
 #
-/control/loop runElectron_ISO.mac Ekin 100. 900. 100.  # Use 1 000 000 000 electrons
+#/control/loop runElectron_ISO.mac Ekin 800. 900. 100.  # Use 1 000 000 000 electrons
 /control/loop runElectron_ISO.mac Ekin 1000. 7000. 1000.    # Use 100 000 000 electrons
