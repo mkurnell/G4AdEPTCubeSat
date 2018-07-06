@@ -24,10 +24,8 @@
 // ********************************************************************
 //
 // ********************************************************************
-// NEUDOSE.cc
+// AdEPTCubeSat.cc
 //
-// Description: Main program of the NEUDOSE Tissue Equivalent Proportional Counter 
-// Geant4 simulation
 // ********************************************************************
 
 #ifdef G4MULTITHREADED
